@@ -1,5 +1,4 @@
 @prefix : <http://marine.ie/stock#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -8,46 +7,29 @@
 @base <http://marine.ie/stock> .
 
 <http://marine.ie/stock> rdf:type owl:Ontology ;
-                          owl:imports dc: ,
-                                      <http://www.w3.org/ns/prov> ;
-                          dc:creator """Simon Jonathan David COX
+                          <http://purl.org/dc/elements/1.1/creator> """Simon Jonathan David COX
 CSIRO""" ;
-                          dc:description "A simple OWL representation of the Sampling Features Schema described in clauses 9-11 of ISO 19156:2011 Geographic Information - Observations and Measurements" ,
-                                         "An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements / OGC Abstract Specification - Topic 20." ;
-                          dc:rights "Copyright © 2014, 2015 CSIRO" ,
-                                    "Copyright © 2014, 2015, 2016 CSIRO" ;
-                          dc:source "ISO 19156:2011" ;
-                          dc:title "OWL for Observations" ,
-                                   "OWL for Sampling Features" ;
+                          <http://purl.org/dc/elements/1.1/description> "An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements / OGC Abstract Specification - Topic 20." ;
+                          <http://purl.org/dc/elements/1.1/rights> "Copyright © 2014, 2015, 2016 CSIRO" ;
+                          <http://purl.org/dc/elements/1.1/source> "ISO 19156:2011" ;
+                          <http://purl.org/dc/elements/1.1/title> "OWL for Observations" ;
                           <http://purl.org/dc/terms/created> "2014-10-07"^^xsd:date ;
                           <http://purl.org/dc/terms/creator> <http://orcid.org/0000-0002-3884-3420> ;
                           <http://purl.org/dc/terms/license> <http://creativecommons.org/licenses/by/3.0/au/> ;
-                          <http://purl.org/dc/terms/modified> "2015-11-17"^^xsd:date ,
-                                                              "2016-10-27"^^xsd:date ;
-                          <http://purl.org/vocab/vann/preferredNamespacePrefix> "oml:" ,
-                                                                                "saml:" ;
-                          <http://purl.org/vocab/vann/preferredNamespaceUri> <http://def.seegrid.csiro.au/ontology/om/om-lite#> ,
-                                                                             <http://def.seegrid.csiro.au/ontology/om/sam-lite#> ;
+                          <http://purl.org/dc/terms/modified> "2016-10-27"^^xsd:date ;
+                          <http://purl.org/vocab/vann/preferredNamespacePrefix> "oml:" ;
+                          <http://purl.org/vocab/vann/preferredNamespaceUri> <http://def.seegrid.csiro.au/ontology/om/om-lite#> ;
                           rdfs:comment """An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements. 
 In contrast to previous versions developed through SSN and in conjunction with ISO 19150-2, this ontology has minimal dependencies on existing ontologies, particularly those that trigger extended chains of imports. Stub classes are provided for time, geometry and measure (scaled number), which can be substituted at run-time by a suitable concrete representation of the concept. 
 Observation Collection has been (re-)introduced, to support the common case where a collection is homogeneous in one or more properties (feature-of-interest, phenomenon-time, observed-property, units-of-measure, procedure). The value of the common property may be recorded against the collection instead of repetitively against every member.   
 
-In this revision, the observation result is an Object Property, in order to conform to strict OWL2 semantics. The type constraints on Observation specializations TruthObservation and CountObservation have been changed, so that the range of oml:result is an Object containing the xsd type, rather than the data-type itself. """ ,
-                                       """An OWL representation of the Sampling Features Schema described in clauses 9-11 of ISO 19156:2011 Geographic Information - Observations and Measurements. 
-In contrast to previous versions developed through SSN and in conjunction with ISO 19150-2, this ontology has minimal dependencies on existing ontologies, particularly those that trigger extended chains of imports. Stub classes are provided for time, geometry and measure (scaled number), which can be substituted at run-time by a suitable concrete representation of the concept. 
-The model for Specimen has a dependency on W3C PROV-O. Specimen is modelled as a subclass of prov:Entity, so PROV can be used to describe specimen preparation chains. """ ;
-                          rdfs:label "OWL for Observations" ,
-                                     "OWL for Sampling Features" ;
+In this revision, the observation result is an Object Property, in order to conform to strict OWL2 semantics. The type constraints on Observation specializations TruthObservation and CountObservation have been changed, so that the range of oml:result is an Object containing the xsd type, rather than the data-type itself. """ ;
+                          rdfs:label "OWL for Observations" ;
                           rdfs:seeAlso <http://www.semantic-web-journal.net/content/ontology-observations-and-sampling-features-alignments-existing-models-0> ;
-                          owl:priorVersion <http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation> ,
-                                           <http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling> ;
+                          owl:priorVersion <http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation> ;
                           <http://www.w3.org/2004/02/skos/core#changeNote> "2015-03-06	Added samplingStrategy property, in order to separate sampling from the feature of interest" ,
                                                                            "2015-08-18 Added ObservationCollection class; added to domain of key Observation properties (except oml:result) to support inheritance of common properties from a container. " ,
-                                                                           "2015-08-18 Added samfl:SamplingCollection class to domain of samfl:sampledFeature" ,
-                                                                           "2015-08-27 Added samfl:materialClass property, rdfs:domain samfl:Specimen" ,
-                                                                           "2015-09-18 Added samfl:samplingElevation property, rdfs:domain samfl:Specimen" ,
                                                                            "2015-11-17 Added oml:member property, with fixed domain (ObservationCollection) and range (Observation), in place of rdfs:member, which is not liked by OWL-API. " ,
-                                                                           "2015-11-17 Added samfl:member property, with fixed domain (SamplingCollection) and range (SamplingFeature), in place of rdfs:member, which is not liked by OWL-API. " ,
                                                                            "2016-01-20 In order to satisfy OWLAPI requirements, changed oml:result to an ObjectProperty; changed the constraints on CountObservation and TruthObservation to refer to newly created CountObject and TruthObject to encapsulate the values as objects. " ,
                                                                            "2016-10-27 Add stimulus-time property" .
 
@@ -56,27 +38,62 @@ The model for Specimen has a dependency on W3C PROV-O. Specimen is modelled as a
 #################################################################
 
 ###  http://purl.org/dc/elements/1.1/creator
-dc:creator rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty ;
+                                          <http://purl.org/dc/terms/description> "Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity."@en ;
+                                          <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                          rdfs:comment "An entity primarily responsible for making the resource."@en ;
+                                          rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                          rdfs:label "Creator"@en ;
+                                          <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/elements/1.1/description
-dc:description rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/description> rdf:type owl:AnnotationProperty ;
+                                              <http://purl.org/dc/terms/description> "Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."@en ;
+                                              <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                              rdfs:comment "An account of the resource."@en ;
+                                              rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                              rdfs:label "Description"@en ;
+                                              <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/description) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/elements/1.1/identifier
-dc:identifier rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/identifier> rdf:type owl:AnnotationProperty ;
+                                             <http://purl.org/dc/terms/description> "Recommended practice is to identify the resource by means of a string conforming to an identification system."@en ;
+                                             <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                             rdfs:comment "An unambiguous reference to the resource within a given context."@en ;
+                                             rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                             rdfs:label "Identifier"@en ;
+                                             <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/identifier) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/elements/1.1/rights
-dc:rights rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/rights> rdf:type owl:AnnotationProperty ;
+                                         <http://purl.org/dc/terms/description> "Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."@en ;
+                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                         rdfs:comment "Information about rights held in and over the resource."@en ;
+                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                         rdfs:label "Rights"@en ;
+                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/rights) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/elements/1.1/source
-dc:source rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/source> rdf:type owl:AnnotationProperty ;
+                                         <http://purl.org/dc/terms/description> "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."@en ;
+                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                         rdfs:comment "A related resource from which the described resource is derived."@en ;
+                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                         rdfs:label "Source"@en ;
+                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/source) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/elements/1.1/title
-dc:title rdf:type owl:AnnotationProperty .
+<http://purl.org/dc/elements/1.1/title> rdf:type owl:AnnotationProperty ;
+                                        <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                        rdfs:comment "A name given to the resource."@en ;
+                                        rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                        rdfs:label "Title"@en ;
+                                        <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/title) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
 
 
 ###  http://purl.org/dc/terms/created
@@ -91,12 +108,24 @@ dc:title rdf:type owl:AnnotationProperty .
 <http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
 
 
+###  http://purl.org/dc/terms/issued
+<http://purl.org/dc/terms/issued> rdf:type owl:AnnotationProperty .
+
+
 ###  http://purl.org/dc/terms/license
 <http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/dc/terms/modified
 <http://purl.org/dc/terms/modified> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+<http://purl.org/dc/terms/publisher> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/vocab/vann/preferredNamespacePrefix
@@ -123,8 +152,20 @@ dc:title rdf:type owl:AnnotationProperty .
 <http://www.w3.org/2004/02/skos/core#historyNote> rdf:type owl:AnnotationProperty .
 
 
+###  http://www.w3.org/2004/02/skos/core#note
+<http://www.w3.org/2004/02/skos/core#note> rdf:type owl:AnnotationProperty .
+
+
 ###  http://www.w3.org/2004/02/skos/core#prefLabel
 <http://www.w3.org/2004/02/skos/core#prefLabel> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
 
 
 #################################################################
@@ -325,223 +366,210 @@ The relative positions of stimulus-time, phenomenon-time, result-time define whe
                                                       rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#complex
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#complex> rdf:type owl:ObjectProperty ;
-                                                           rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ;
-                                                           rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeatureComplex> ;
-                                                           rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                           rdfs:label "sampling feature complex" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#currentLocation
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#currentLocation> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                   rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#Location> ;
-                                                                   rdfs:comment """If present, the attribute currentLocation:Location shall describe the location of a physical specimen. This may be a storage location, such as a shelf in a warehouse or a drawer in a museum.
-
-NOTE If a specimen no longer exists, for example, it was destroyed in connection with an observation act, then the currentLocation should be omitted or carry a suitable null indicator.""" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                   rdfs:label "current location" ;
-                                                                   <http://www.w3.org/2004/02/skos/core#definition> """If present, the attribute currentLocation:Location shall describe the location of a physical specimen. This may be a storage location, such as a shelf in a warehouse or a drawer in a museum.
-
-NOTE If a specimen no longer exists, for example, it was destroyed in connection with an observation act, then the currentLocation should be omitted or carry a suitable null indicator.""" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#hostedProcedure
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#hostedProcedure> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ;
-                                                                   rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#ObservationProcess> ;
-                                                                   rdfs:comment "the association links a SpatialSamplingFeature to an Observation procedure (instrument, sensor, observer or software process) deployed at it" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                   rdfs:label "hosted procedure or instrument" ;
-                                                                   <http://www.w3.org/2004/02/skos/core#definition> "A common role for a spatial sampling feature is to host instruments or procedures deployed repetitively or permanently. If present, the association Platform shall link the SF_SpatialSamplingFeature to an OM_Process deployed at it. The OM_Process has the role hostedProcedure with respect to the sampling feature." .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#materialClass
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#materialClass> rdf:type owl:ObjectProperty ;
-                                                                 rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                 rdfs:comment """Value should be taken from a vocabulary of material classes. 
-
-e.g. aqueous liquid, non-aqueous liquid, soil, rock, tissue, vegetation (broad case) or finer classifications if available""" ;
-                                                                 rdfs:label "class of material" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#member
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#member> rdf:type owl:ObjectProperty ;
-                                                          rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCollection> ;
-                                                          rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ;
-                                                          rdfs:label "has member" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#relatedSamplingFeature
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#relatedSamplingFeature> rdf:type owl:ObjectProperty ;
-                                                                          rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ;
-                                                                          rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                          rdfs:label "related sampling feature" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#role
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#role> rdf:type owl:ObjectProperty ;
-                                                        rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeatureComplex> ;
-                                                        rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                        rdfs:label "role" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#sampledFeature
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#sampledFeature> rdf:type owl:ObjectProperty ;
-                                                                  rdfs:domain [ rdf:type owl:Class ;
-                                                                                owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCollection>
-                                                                                              <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature>
-                                                                                            )
-                                                                              ] ;
-                                                                  rdfs:comment """A sampling feature is established in order to make observations concerning some domain feature. The relation from the SamplingFeature to the feature which the sampling feature was designed to sample. 
-
-EXAMPLE A profile typically samples a water- or atmospheric-column; a well samples the water in an aquifer; a tissue specimen samples a part of an organism.""" ;
-                                                                  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                  rdfs:label "sampled feature" ;
-                                                                  <http://www.w3.org/2004/02/skos/core#definition> """A sampling feature is established in order to make observations concerning some domain feature. The association Intention shall link the SF_SamplingFeature to the feature which the sampling feature was designed to sample. The target of this association has the role sampledFeature with respect to the sampling feature, and shall not be a sampling feature or observation. It is usually a real-world feature from an application domain (Figures 5 and 10).
-
-EXAMPLE A profile typically samples a water- or atmospheric-column; a well samples the water in an aquifer; a tissue specimen samples a part of an organism.""" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingElevation
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingElevation> rdf:type owl:ObjectProperty ;
-                                                                     rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                     rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#Elevation> ;
-                                                                     rdfs:comment """If present, the attribute samplingElevation shall describe the elevation from where the specimen was obtained, relative to the sampling location.
-
-NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous elevation then this attribute is not required. However, if the specific elevationat the location, then this attribute supports its description.""" ;
-                                                                     rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                     rdfs:label "sampling elevation" ;
-                                                                     <http://www.w3.org/2004/02/skos/core#definition> """If present, the attribute samplingElevation shall describe the elevation from where the specimen was obtained, relative to the sampling location.
-
-NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous elevation then this attribute is not required. However, if the specific elevationat the location, then this attribute supports its description.""" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingLocation
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingLocation> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                    rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#Location> ;
-                                                                    rdfs:comment """If present, the attribute samplingLocation:GM_Object shall describe the location from where the specimen was obtained.
-
-NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous location then this attribute is not required. However, if the specific sampling location within the sampledFeature is important, then this attribute supports its description.""" ;
-                                                                    rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                    rdfs:label "sampling location" ;
-                                                                    <http://www.w3.org/2004/02/skos/core#definition> """If present, the attribute samplingLocation:GM_Object shall describe the location from where the specimen was obtained.
-
-NOTE Where a specimen has a relatedSamplingFeature whose location provides an unambiguous location then this attribute is not required. However, if the specific sampling location within the sampledFeature is important, then this attribute supports its description.""" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingMethod
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingMethod> rdf:type owl:ObjectProperty ;
-                                                                  rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                  rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#Process> ;
-                                                                  rdfs:comment "Process used to obtain the Specimen from its sampledFeature" ;
-                                                                  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                  rdfs:label "sampling method" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#shape
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> rdf:type owl:ObjectProperty ,
-                                                                  owl:FunctionalProperty ;
-                                                         rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ;
-                                                         rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                         rdfs:label "spatial sampling feature shape" ;
-                                                         <http://www.w3.org/2004/02/skos/core#definition> "The association Geometry shall link an SF_SpatialSamplingFeature to a GM_Object that describes its shape." .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#size
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#size> rdf:type owl:ObjectProperty ;
-                                                        rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                        rdfs:range <http://def.seegrid.csiro.au/ontology/om/sam-lite#Measure> ;
-                                                        rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                        rdfs:label "specimen size" ;
-                                                        <http://www.w3.org/2004/02/skos/core#definition> "the attribute size:Measure shall describe a physical extent of the specimen. This may be length, mass, volume, etc., as appropriate for the specimen instance and its material class." .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#verticalDatum
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#verticalDatum> rdf:type owl:ObjectProperty ;
-                                                                 rdfs:label "vertical (elevation) datum" .
-
-
 ###  http://marine.ie/stock#hasAphiaID
 :hasAphiaID rdf:type owl:ObjectProperty ;
+            owl:inverseOf :isAphiaIDOf ;
             rdfs:domain :Sample ;
-            rdfs:range :AphiaID .
+            rdfs:range :AphiaID ;
+            rdfs:comment "Links a sample with an aphia ID" ;
+            rdfs:label "has AphiaID" .
 
 
 ###  http://marine.ie/stock#hasCruiseCode
 :hasCruiseCode rdf:type owl:ObjectProperty ;
+               owl:inverseOf :isCruiseCodeOf ;
                rdfs:domain :Trip ;
-               rdfs:range :CruiseCode .
+               rdfs:range :CruiseCode ;
+               rdfs:comment "links trip with cruise code" ;
+               rdfs:label "has cruise code" .
 
 
 ###  http://marine.ie/stock#hasGearCode
 :hasGearCode rdf:type owl:ObjectProperty ;
+             owl:inverseOf :isGearCodeOf ;
              rdfs:domain :SampleHeader ;
-             rdfs:range :GearCode .
+             rdfs:range :GearCode ;
+             rdfs:comment "Links sampleHeader with gear code" ;
+             rdfs:label "has gear code" .
 
 
-###  http://marine.ie/stock#hasObservationCollection
-:hasObservationCollection rdf:type owl:ObjectProperty ;
-                          rdfs:domain :Sample ;
-                          rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection> .
+###  http://marine.ie/stock#hasPort
+:hasPort rdf:type owl:ObjectProperty ;
+         owl:inverseOf :isPortOf ;
+         rdfs:domain :Trip ;
+         rdfs:range :Port ;
+         rdfs:comment "This links trip ID with Port" ;
+         rdfs:label "has Port" .
 
 
 ###  http://marine.ie/stock#hasPresentation
 :hasPresentation rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :isPresentationOf ;
                  rdfs:domain :Sample ;
-                 rdfs:range :Presentation .
+                 rdfs:range :Presentation ;
+                 rdfs:comment "links sample with presentation type eg round, gutted" ;
+                 rdfs:label "has presentation" .
 
 
 ###  http://marine.ie/stock#hasSample
 :hasSample rdf:type owl:ObjectProperty ;
+           owl:inverseOf :isSampleOf ;
            rdfs:domain :SampleHeader ;
-           rdfs:range :Sample .
+           rdfs:range :Sample ;
+           rdfs:comment "Links sampleHeader ID with sample ID" ;
+           rdfs:label "has sample" .
 
 
 ###  http://marine.ie/stock#hasSampleHeader
 :hasSampleHeader rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :isSampleHeaderOf ;
                  rdfs:domain :Trip ;
-                 rdfs:range :SampleHeader .
+                 rdfs:range :SampleHeader ;
+                 rdfs:comment "Links sample header ID with sample ID" ;
+                 rdfs:label "has sampleHeader" .
+
+
+###  http://marine.ie/stock#hasSamplerID
+:hasSamplerID rdf:type owl:ObjectProperty ;
+              rdfs:domain :Trip ;
+              rdfs:range :SamplerID ;
+              rdfs:comment "Links trip with SamplerID" ;
+              rdfs:label "has samplerID" .
 
 
 ###  http://marine.ie/stock#hasSizeCategory
 :hasSizeCategory rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :isSizeCategoryOf ;
                  rdfs:domain :Sample ;
-                 rdfs:range :SizeCategory .
+                 rdfs:range :SizeCategory ;
+                 rdfs:comment "Links sample ID with size category type" ;
+                 rdfs:label "has size category" .
 
 
-###  http://marine.ie/stock#hasSubDivision
-:hasSubDivision rdf:type owl:ObjectProperty ;
-                rdfs:domain :SampleHeader ;
-                rdfs:range :SubDivision .
+###  http://marine.ie/stock#hasSpecimen
+:hasSpecimen rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#member> ;
+             owl:inverseOf :isSpecimenOf ;
+             rdfs:domain :Sample ;
+             rdfs:range :Specimen ;
+             rdfs:comment "Links a sample ID with a Specimen ID" ;
+             rdfs:label "has specimen" .
 
 
 ###  http://marine.ie/stock#hasVesselID
 :hasVesselID rdf:type owl:ObjectProperty ;
+             owl:inverseOf :isVesselIDOf ;
              rdfs:domain :SampleHeader ;
-             rdfs:range :VesselID .
+             rdfs:range :VesselID ;
+             rdfs:comment "Links sample header ID with vessel ID" ;
+             rdfs:label "has vessel ID" .
 
 
-###  http://marine.ie/stock#isPartOfGroup
-:isPartOfGroup rdf:type owl:ObjectProperty ;
-               rdfs:domain :AphiaID ;
-               rdfs:range :SpeciesGroup .
+###  http://marine.ie/stock#isAphiaIDOf
+:isAphiaIDOf rdf:type owl:ObjectProperty ;
+             rdfs:domain :AphiaID ;
+             rdfs:range :Sample ;
+             rdfs:comment "Links aphiaID to sample" ;
+             rdfs:label "is Aphia ID of" .
+
+
+###  http://marine.ie/stock#isCruiseCodeOf
+:isCruiseCodeOf rdf:type owl:ObjectProperty ;
+                rdfs:domain :CruiseCode ;
+                rdfs:range :Trip ;
+                rdfs:comment "Links cruise code with Trip id" ;
+                rdfs:label "is Cruise code of" .
+
+
+###  http://marine.ie/stock#isGearCodeOf
+:isGearCodeOf rdf:type owl:ObjectProperty ;
+              rdfs:domain :GearCode ;
+              rdfs:range :SampleHeader ;
+              rdfs:comment "Links gear code to SampleHeader" ;
+              rdfs:label "is Gear Code of" .
+
+
+###  http://marine.ie/stock#isLocatioOf
+:isLocatioOf rdf:type owl:ObjectProperty ;
+             owl:inverseOf :locatedIn ;
+             rdfs:domain :SubDivision ;
+             rdfs:range :SampleHeader ;
+             rdfs:comment "Links area, subarea, division and subdivisioon" ;
+             rdfs:label "Is location of" .
+
+
+###  http://marine.ie/stock#isPortOf
+:isPortOf rdf:type owl:ObjectProperty ;
+          rdfs:domain :Port ;
+          rdfs:range :Trip ;
+          rdfs:comment "Links port with trip ID" ;
+          rdfs:label "is Port of" .
+
+
+###  http://marine.ie/stock#isPresentationOf
+:isPresentationOf rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Presentation ;
+                  rdfs:range :Sample ;
+                  rdfs:comment "Links presentation type to sample" ;
+                  rdfs:label "is Presentation of" .
+
+
+###  http://marine.ie/stock#isSampleHeaderOf
+:isSampleHeaderOf rdf:type owl:ObjectProperty ;
+                  rdfs:domain :SampleHeader ;
+                  rdfs:range :Trip ;
+                  rdfs:comment "Links a sampleheader to a trip id" ;
+                  rdfs:label "is Sample Header of" .
+
+
+###  http://marine.ie/stock#isSampleOf
+:isSampleOf rdf:type owl:ObjectProperty ;
+            rdfs:domain :Sample ;
+            rdfs:range :SampleHeader ;
+            rdfs:comment "Links sample to sampleHeader" ;
+            rdfs:label "is Sample of" .
+
+
+###  http://marine.ie/stock#isSamplerIDof
+:isSamplerIDof rdf:type owl:ObjectProperty ;
+               rdfs:domain :SamplerID ;
+               rdfs:range :Trip ;
+               rdfs:comment "links SamplerID to Trip" ;
+               rdfs:label "is Sampler ID of" .
+
+
+###  http://marine.ie/stock#isSizeCategoryOf
+:isSizeCategoryOf rdf:type owl:ObjectProperty ;
+                  rdfs:domain :SizeCategory ;
+                  rdfs:range :Sample ;
+                  rdfs:comment "Link size category to sample" ;
+                  rdfs:label "is SizeCategory of" .
+
+
+###  http://marine.ie/stock#isSpecimenOf
+:isSpecimenOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#memberOf> ;
+              rdfs:domain :Specimen ;
+              rdfs:range :Sample ;
+              rdfs:comment "Links specimen to sample" ;
+              rdfs:label "is Specimen of" .
+
+
+###  http://marine.ie/stock#isVesselIDOf
+:isVesselIDOf rdf:type owl:ObjectProperty ;
+              rdfs:domain :VesselID ;
+              rdfs:range :SampleHeader ;
+              rdfs:comment "Links vessel ID to sampleHeader" ;
+              rdfs:label "is Vessel ID of" .
 
 
 ###  http://marine.ie/stock#locatedIn
-:locatedIn rdf:type owl:ObjectProperty ,
-                    owl:TransitiveProperty ;
-           rdfs:domain :Division ,
-                       :SampleHeader ,
-                       :SubArea ,
-                       :SubDivision ;
-           rdfs:range :Area ,
-                      :Division ,
-                      :SubArea ,
-                      :SubDivision .
+:locatedIn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :SampleHeader ;
+           rdfs:range :SubDivision ;
+           rdfs:comment "links sampleHeader with subdivision, subdivision with division, division with subArea, subArea with area" ;
+           rdfs:label "located in" .
 
 
 #################################################################
@@ -593,28 +621,6 @@ EXAMPLE 4 Simulations can estimate the values for phenomena in the future or pas
                                                         rdfs:label "Truth value" .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#elevation
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#elevation> rdf:type owl:DatatypeProperty ;
-                                                             rdfs:range [ rdf:type rdfs:Datatype ;
-                                                                          owl:unionOf ( xsd:decimal
-                                                                                        xsd:double
-                                                                                        xsd:float
-                                                                                      )
-                                                                        ] ;
-                                                             rdfs:label "vertical offset from a datum" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingTime
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingTime> rdf:type owl:DatatypeProperty ,
-                                                                         owl:FunctionalProperty ;
-                                                                rdfs:domain <http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> ;
-                                                                rdfs:range xsd:dateTime ;
-                                                                rdfs:comment "samplingTime records when the specimen was retrieved from the sampled feature." ;
-                                                                rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                rdfs:label "sampling time" ;
-                                                                <http://www.w3.org/2004/02/skos/core#definition> "samplingTime records when the specimen was retrieved from the sampled feature." .
-
-
 #################################################################
 #    Classes
 #################################################################
@@ -645,7 +651,6 @@ EXAMPLE 4 Simulations can estimate the values for phenomena in the future or pas
 
 ###  http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObject
 <http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObject> rdf:type owl:Class ;
-                                                                 owl:equivalentClass <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
                                                                  rdfs:subClassOf owl:Thing ;
                                                                  <http://purl.org/dc/terms/description> "Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. " ;
                                                                  rdfs:comment "This stub is included in the om: ontology to support references to geometry as the result of a GeometryObservation.  An existing OWL class that represents the notion of a geometry may be asserted to be a sub-class of this stub, without requiring use of a specific representation of Geometry in the context of observations instance." ;
@@ -668,7 +673,6 @@ EXAMPLE 4 Simulations can estimate the values for phenomena in the future or pas
 
 ###  http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject
 <http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject> rdf:type owl:Class ;
-                                                                owl:equivalentClass <http://def.seegrid.csiro.au/ontology/om/sam-lite#Measure> ;
                                                                 <http://purl.org/dc/terms/description> "Scaled number" ;
                                                                 rdfs:comment """Scaled number
 
@@ -787,7 +791,6 @@ This association complements the Intention association which describes relations
 
 ###  http://def.seegrid.csiro.au/ontology/om/om-lite#Process
 <http://def.seegrid.csiro.au/ontology/om/om-lite#Process> rdf:type owl:Class ;
-                                                          owl:equivalentClass <http://def.seegrid.csiro.au/ontology/om/sam-lite#ObservationProcess> ;
                                                           <http://purl.org/dc/terms/description> "Agent, device, sensor, software, protocol, computational method, algorithm or plan responsible for generating an observation result. Input may be a sensor stimulus, or the output from a previous process. An oml:Process might be involved in many observations. " ;
                                                           rdfs:comment """Agent, device, sensor, software, protocol, computational method, algorithm or plan responsible for generating an observation result. Input may be a sensor stimulus, or the output from a previous process. An oml:Process is re-usable, and might be involved in many observations.
 
@@ -870,860 +873,165 @@ Temporal object has properties relating to time only.""" ;
                                                                    rdfs:label "Truth Observation"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Curve
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Curve> rdf:type owl:Class ;
-                                                         rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
-                                                         <http://purl.org/dc/terms/description> "1-D geometric object" ;
-                                                         rdfs:comment """1-D geometric object
-
-This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingCurve.  An existing OWL class that represents the notion of a Curve may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Curve in the context of a sam:SamplingCurve instance.""" ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                         rdfs:label "Spatial curve" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Elevation
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Elevation> rdf:type owl:Class ;
-                                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                               owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#verticalDatum> ;
-                                                                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                                                             ] ,
-                                                                             [ rdf:type owl:Restriction ;
-                                                                               owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#elevation> ;
-                                                                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                             ] ;
-                                                             <http://purl.org/dc/terms/description> "Simple model for elevation, expressed as a vertical offset from a datum" ;
-                                                             rdfs:comment "Simple model for elevation, expressed as a vertical offset from a datum" ;
-                                                             rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                             rdfs:label "Elevation" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> rdf:type owl:Class ;
-                                                                  rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#Location> ,
-                                                                                  owl:Thing ;
-                                                                  <http://purl.org/dc/terms/description> "Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. " ;
-                                                                  rdfs:comment """Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. 
-
-This stub is included in the sam: ontology to support references to geometry in various places.  An existing concrete OWL class that represents the notion of a geometry may be asserted to be a sub-class of this stub, without requiring use of a specific representation of Geometry in the context of sampling.""" ;
-                                                                  rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                  rdfs:label "Geometry object" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Location
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Location> rdf:type owl:Class ;
-                                                            <http://purl.org/dc/terms/description> "Location, expressed as either a geometry object or feature" ;
-                                                            rdfs:comment """Location, expressed as either a geometry object or feature
-
-samfl:GeometryObject is subclass
-
-w3geo:SpatialThing, geosparql:SpatialObject are subclasses""" ;
-                                                            rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                            rdfs:label "Location" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Measure
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Measure> rdf:type owl:Class ;
-                                                           <http://purl.org/dc/terms/description> "Scaled number. " ;
-                                                           rdfs:comment """Scaled number. 
-
-This is an abstract class, which should be substituted by a suitable concrete representation of a measure or quantity at run-tme. 
-
-oml:SimpleMeasure <http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure>
-qudt:QuantityValue <http://qudt.org/schema/qudt#QuantityValue> 
-DUL:Region <http://www.loa-cnr.it/ontologies/DUL.owl#Region> 
-
-are candidates. """ ;
-                                                           rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                           rdfs:label "Measure or quantity" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#ObservationProcess
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#ObservationProcess> rdf:type owl:Class ;
-                                                                      owl:disjointWith <http://def.seegrid.csiro.au/ontology/om/sam-lite#Process> ;
-                                                                      <http://purl.org/dc/terms/description> "Process used in an observation, including sensors, algorithms, computation methods" ;
-                                                                      rdfs:comment """Process used in an observation, including sensors, algorithms, computation methods
-
-The result of application of an observation process is an observation result - i.e. an estimate of a property value.""" ;
-                                                                      rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                      rdfs:label "Observation process"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Point
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Point> rdf:type owl:Class ;
-                                                         rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
-                                                         <http://purl.org/dc/terms/description> "0-D geometric object" ;
-                                                         rdfs:comment """0-D geometric object
-
-This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingPoint.  An existing OWL class that represents the notion of a Point may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Point in the context of a sam:SamplingPoint instance.""" ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                         rdfs:label "Spatial point" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Process
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Process> rdf:type owl:Class ;
-                                                           rdfs:subClassOf <http://www.w3.org/ns/prov#Agent> ;
-                                                           <http://purl.org/dc/terms/description> "Agent, device, protocol, or plan involved in sampling. This may include specimen retrieval or processing, surveying a spatial sampling feature, excavation to provide access to a sampling feature, or any other process whose outcome is a new sampling feature." ;
-                                                           rdfs:comment """Agent, device, protocol, or plan responsible for transforming a sampling features. 
-
-The result of a application of a sampling process is a - new or - transformed sample. """ ;
-                                                           rdfs:isDefinedBy <http://def.seegrid.csiro.au/isotc211/iso19156/2011/sampling> ,
-                                                                            <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                           rdfs:label "Sampling process"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCollection
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCollection> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                        owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#member> ;
-                                                                                        owl:minCardinality "1"^^xsd:nonNegativeInteger
-                                                                                      ] ;
-                                                                      <http://purl.org/dc/terms/description> "Collection of features on which observations may be made, which are intended to be representative of one or more features that are not fully accessible for some reason. " ;
-                                                                      rdfs:comment "The member sampling features are intended to sample domain features, as indicated by one or more sampledFeature properties. If only one is present then this is the sampled feature of all the member sampling features, unless locally overridden." ;
-                                                                      rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                      rdfs:label "Collection of sampling features"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCurve
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingCurve> rdf:type owl:Class ;
-                                                                 rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ,
-                                                                                 [ rdf:type owl:Restriction ;
-                                                                                   owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> ;
-                                                                                   owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/sam-lite#Curve>
-                                                                                 ] ;
-                                                                 <http://purl.org/dc/terms/description> "Spatial sampling feature whose shape is a 1-D manifold (Curve)" ;
-                                                                 rdfs:comment """Spatial sampling feature whose shape is a 1-D manifold (Curve)
-
-Transect, traverse, flightline, cruise, trajectory, borehole, etc""" ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                 rdfs:label "Sampling curve"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> ,
-                                                                                   [ rdf:type owl:Restriction ;
-                                                                                     owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#sampledFeature> ;
-                                                                                     owl:minCardinality "1"^^xsd:nonNegativeInteger
-                                                                                   ] ;
-                                                                   <http://purl.org/dc/terms/description> "Feature on which observations may be made, which is intended to be representative of a feature that is not fully accessible. " ;
-                                                                   rdfs:comment """Sampling features are artefacts of an observational strategy, and have no significant function outside of their role in the observation process. The physical characteristics of the features themselves are of little interest, except perhaps to the manager of a sampling campaign.
-
-EXAMPLE A “station” is essentially an identifiable locality where a sensor system or procedure may be deployed and an observation made. In the context of the observation model, it connotes the “world in the vicinity of the station”, so the observed properties relate to the physical medium at the station, and not to any physical artefact such as a mooring, buoy, benchmark, monument, well, etc.
-
-NOTE A transient sampling feature, such as a ships-track or flight-line, might be identified and described, but is unlikely to be revisited exactly.
-
-A sampling feature is intended to sample some feature-of-interest in an application domain, so there is an expectation of at least one sampledFeature property. However, in some cases the identity, and even the exact type, of the sampled feature may not be known when observations are made using the sampling features.""" ,
-                                                                                "The value for the property 'sampledFeature' may be inherited from a container resource." ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                   rdfs:label "Sampling Feature"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeatureComplex
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeatureComplex> rdf:type owl:Class ;
-                                                                          rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                            owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#relatedSamplingFeature> ;
-                                                                                            owl:minCardinality "0"^^xsd:nonNegativeInteger
-                                                                                          ] ,
-                                                                                          [ rdf:type owl:Restriction ;
-                                                                                            owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#role> ;
-                                                                                            owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                                          ] ;
-                                                                          <http://purl.org/dc/terms/description> "Resource that relates a sampling feature to another sampling feature with a role indicating the nature of the relationship. " ;
-                                                                          rdfs:comment """Resource that relates a sampling feature to another sampling feature with a role indicating the nature of the relationship. 
-
-Sampling features are frequently related to each other, as parts of complexes, through sub-sampling, and in other ways. If present, the association class SamplingFeatureComplex (Figure 9) shall link an SF_SamplingFeature to another SF_SamplingFeature.""" ;
-                                                                          rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                          rdfs:label "Sampling feature complex"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingPoint
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingPoint> rdf:type owl:Class ;
-                                                                 rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ,
-                                                                                 [ rdf:type owl:Restriction ;
-                                                                                   owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> ;
-                                                                                   owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/sam-lite#Point>
-                                                                                 ] ;
-                                                                 <http://purl.org/dc/terms/description> "Spatial sampling feature whose shape is a 0-D manifold (Point)" ;
-                                                                 rdfs:comment """Spatial sampling feature whose shape is a 0-D manifold (Point)
-
-Often referred to as a 'station', 'pixel', 'probe-spot' etc.""" ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                 rdfs:label "Sampling point"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSolid
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSolid> rdf:type owl:Class ;
-                                                                 rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ,
-                                                                                 [ rdf:type owl:Restriction ;
-                                                                                   owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> ;
-                                                                                   owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/sam-lite#Solid>
-                                                                                 ] ;
-                                                                 <http://purl.org/dc/terms/description> "Spatial sampling feature whose shape is a 3-D manifold (Solid)" ;
-                                                                 rdfs:comment "Spatial sampling feature whose shape is a 3-D manifold (Solid)" ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                 rdfs:label "Sampling solid"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSurface
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingSurface> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> ,
-                                                                                   [ rdf:type owl:Restriction ;
-                                                                                     owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> ;
-                                                                                     owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/sam-lite#Surface>
-                                                                                   ] ;
-                                                                   <http://purl.org/dc/terms/description> "Spatial sampling feature whose shape is a 2-D manifold (Surface)" ;
-                                                                   rdfs:comment """Spatial sampling feature whose shape is a 2-D manifold (Surface)
-
-Scene, swath, cross-section, level, quadrat, area-of-interest, fence, etc.""" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                   rdfs:label "Sampling surface"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Solid
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Solid> rdf:type owl:Class ;
-                                                         rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
-                                                         <http://purl.org/dc/terms/description> "3-D geometric object, whose exterior is a shell" ;
-                                                         rdfs:comment """3-D geometric object, whose exterior is a shell
-
-This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingSolid.  An existing OWL class that represents the notion of a Solid may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Solid in the context of a sam:SamplingSolid instance.""" ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                         rdfs:label "Spatial solid" .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#SpatialSamplingFeature> rdf:type owl:Class ;
-                                                                          rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ,
-                                                                                          [ rdf:type owl:Restriction ;
-                                                                                            owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#shape> ;
-                                                                                            owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                                          ] ;
-                                                                          <http://purl.org/dc/terms/description> "Sampling feature whose defining characteristic is that it samples the intended feature by geometric subsetting." ;
-                                                                          rdfs:comment """Sampling feature whose defining characteristic is that it samples the intended feature by geometric subsetting.
-
-When observations are made to estimate properties of a geospatial feature, in particular where the value of a property varies within the scope of the feature, a spatial sampling feature is used. Depending on accessibility and on the nature of the expected property variation, the sampling feature may be extensive in one, two or three spatial dimensions. Processing and visualization methods are often dependent on the topological dimension of the sampling manifold, so this provides a natural classification system for sampling features.
-
-This classification follows common practice in focussing on conventional spatial dimensions. Properties observed on sampling features may be time-dependent, but the temporal axis does not generally contribute to the classification of sampling feature classes. Sampling feature identity is usually less time-dependent than the property value.""" ;
-                                                                          rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                                          rdfs:label "Spatial sampling feature"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Specimen> rdf:type owl:Class ;
-                                                            rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#SamplingFeature> ,
-                                                                            [ rdf:type owl:Restriction ;
-                                                                              owl:onProperty <http://def.seegrid.csiro.au/ontology/om/sam-lite#samplingTime> ;
-                                                                              owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                            ] ;
-                                                            <http://purl.org/dc/terms/description> "A Specimen is a physical sample, obtained for observation(s) normally carried out ex-situ, sometimes in a laboratory." ;
-                                                            rdfs:comment "A Specimen is a physical sample, obtained for observation(s) normally carried out ex-situ, sometimes in a laboratory." ;
-                                                            rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                            rdfs:label "Specimen"@en .
-
-
-###  http://def.seegrid.csiro.au/ontology/om/sam-lite#Surface
-<http://def.seegrid.csiro.au/ontology/om/sam-lite#Surface> rdf:type owl:Class ;
-                                                           rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/sam-lite#GeometryObject> ;
-                                                           <http://purl.org/dc/terms/description> "2-D geometric object, whose exterior is a ring or polygon" ;
-                                                           rdfs:comment "This stub is included in the sam: ontology to support constraints on the sam:shape property of a sam:SamplingSurface.  An existing OWL class that represents the notion of a Surface may be asserted to be a sub-class of this stub, but without requiring use of any particular representation of Surface in the context of a sam:SamplingSurface instance." ;
-                                                           rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> ;
-                                                           rdfs:label "Spatial surface" .
-
-
 ###  http://marine.ie/stock#AphiaID
-:AphiaID rdf:type owl:Class .
-
-
-###  http://marine.ie/stock#Area
-:Area rdf:type owl:Class .
+:AphiaID rdf:type owl:Class ;
+         rdfs:comment "This object lists the aphia ID of a sample" ;
+         rdfs:label "AphiaID" .
 
 
 ###  http://marine.ie/stock#CruiseCode
-:CruiseCode rdf:type owl:Class .
-
-
-###  http://marine.ie/stock#Division
-:Division rdf:type owl:Class .
+:CruiseCode rdf:type owl:Class ;
+            rdfs:comment "This object lists the cruise code of a ship" ;
+            rdfs:label "CruiseCode" .
 
 
 ###  http://marine.ie/stock#GearCode
-:GearCode rdf:type owl:Class .
+:GearCode rdf:type owl:Class ;
+          rdfs:comment "This object lists the code of the gear used to catch the sample header" ;
+          rdfs:label "GearCode" .
+
+
+###  http://marine.ie/stock#Port
+:Port rdf:type owl:Class ;
+      rdfs:comment "This object lists the name of the port" ;
+      rdfs:label "Port" .
 
 
 ###  http://marine.ie/stock#Presentation
-:Presentation rdf:type owl:Class .
+:Presentation rdf:type owl:Class ;
+              rdfs:comment "This object lists the type of sample presentation" ;
+              rdfs:label "Presentation" .
 
 
 ###  http://marine.ie/stock#Sample
-:Sample rdf:type owl:Class .
+:Sample rdf:type owl:Class ;
+        rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection> ;
+        rdfs:comment "This object lists a sample number. A sample is composed of a number of specimens" ;
+        rdfs:label "Sample" .
 
 
 ###  http://marine.ie/stock#SampleHeader
-:SampleHeader rdf:type owl:Class .
+:SampleHeader rdf:type owl:Class ;
+              rdfs:comment "This object lists a sample header number. A sample header is composed of a number of samples" ;
+              rdfs:label "SampleHeader" .
+
+
+###  http://marine.ie/stock#SamplerID
+:SamplerID rdf:type owl:Class ;
+           rdfs:comment "This object lists the ID of the person doing the sampling" ;
+           rdfs:label "SamplerID" .
 
 
 ###  http://marine.ie/stock#SizeCategory
-:SizeCategory rdf:type owl:Class .
+:SizeCategory rdf:type owl:Class ;
+              rdfs:comment "This object lists the size category of the sample" ;
+              rdfs:label "SizeCategory" .
 
 
-###  http://marine.ie/stock#SpeciesGroup
-:SpeciesGroup rdf:type owl:Class .
-
-
-###  http://marine.ie/stock#SubArea
-:SubArea rdf:type owl:Class .
+###  http://marine.ie/stock#Specimen
+:Specimen rdf:type owl:Class ;
+          rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ;
+          rdfs:comment "This is a single specimen" ;
+          rdfs:label "Specimen" .
 
 
 ###  http://marine.ie/stock#SubDivision
-:SubDivision rdf:type owl:Class .
+:SubDivision rdf:type owl:Class ;
+             rdfs:comment "This object lists and ICES sub division that a sample header was caught in" ;
+             rdfs:label "SubDivision" .
 
 
 ###  http://marine.ie/stock#Trip
-:Trip rdf:type owl:Class .
+:Trip rdf:type owl:Class ;
+      rdfs:comment "This object is a trip ID" ;
+      rdfs:label "Trip" .
 
 
 ###  http://marine.ie/stock#VesselID
-:VesselID rdf:type owl:Class .
-
-
-###  http://www.w3.org/ns/prov#Agent
-<http://www.w3.org/ns/prov#Agent> rdf:type owl:Class .
-
-
-###  http://www.w3.org/ns/prov#Entity
-<http://www.w3.org/ns/prov#Entity> rdf:type owl:Class .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://marine.ie/datasets/fishsamples/deepwater
-<http://marine.ie/datasets/fishsamples/deepwater> rdf:type owl:NamedIndividual .
-
-
-###  http://marine.ie/datasets/fishsamples/demersal
-<http://marine.ie/datasets/fishsamples/demersal> rdf:type owl:NamedIndividual .
-
-
-###  http://marine.ie/datasets/fishsamples/pelagic
-<http://marine.ie/datasets/fishsamples/pelagic> rdf:type owl:NamedIndividual .
-
-
-###  http://marine.ie/datasets/fishsamples/shellfish
-<http://marine.ie/datasets/fishsamples/shellfish> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27
-<https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27> rdf:type owl:NamedIndividual ,
-                                                                         :Area .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27.7
-<https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27.7> rdf:type owl:NamedIndividual ,
-                                                                           :SubArea ,
-                                                                           :SubDivision ;
-                                                                  :locatedIn <https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27.8
-<https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27.8> rdf:type owl:NamedIndividual ,
-                                                                           :SubDivision ;
-                                                                  :locatedIn <https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ALB
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ALB> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127026> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "ALB" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ALF
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ALF> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126394> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/deepwater> ;
-                                                              dc:identifier "ALF" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ANK
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/ANK> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126554> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "ANK" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/BFT
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/BFT> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127029> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "BFT" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/BOR
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/BOR> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127419> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "BOR" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/COD
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/COD> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126436> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "COD" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/CRE
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/CRE> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107276> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/shellfish> ;
-                                                              dc:identifier "CRE" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/DGS
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/DGS> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105923> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "DGS" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HAD
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HAD> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126437> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "HAD" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HAL
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HAL> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127138> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "HAL" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HER
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HER> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126417> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "HER" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HKE
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HKE> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126484> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "HKE" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HOM
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/HOM> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126822> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "HOM" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LBE
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LBE> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107253> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/shellfish> ;
-                                                              dc:identifier "LBE" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LEM
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LEM> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127140> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "LEM" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LIN
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/LIN> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126461> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "LIN" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MAC
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MAC> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127023> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "MAC" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MEG
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MEG> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127146> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "MEG" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MON
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/MON> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126555> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "MON" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/PIL
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/PIL> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126421> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "PIL" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/PLE
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/PLE> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127143> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "PLE" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/POK
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/POK> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126441> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "POK" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/POL
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/POL> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126440> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "POL" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJI
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJI> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105873> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "RJI" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJM
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJM> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105887> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "RJM" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJN
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/RJN> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105876> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "RJN" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/SOL
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/SOL> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127160> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "SOL" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/SPR
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/SPR> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126425> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "SPR" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/WHB
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/WHB> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126439> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/pelagic> ;
-                                                              dc:identifier "WHB" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecASFIS/WHG
-<https://vocab.ices.dk/services/rdf/collection/SpecASFIS/WHG> rdf:type owl:NamedIndividual ;
-                                                              owl:sameAs <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126438> ;
-                                                              :isPartOfGroup <http://marine.ie/datasets/fishsamples/demersal> ;
-                                                              dc:identifier "WHG" .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105873
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105873> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105876
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105876> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105887
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105887> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105923
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/105923> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107253
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107253> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107276
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/107276> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126394
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126394> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126417
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126417> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126421
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126421> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126425
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126425> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126436
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126436> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126437
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126437> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126438
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126438> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126439
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126439> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126440
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126440> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126441
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126441> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126461
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126461> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126484
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126484> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126554
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126554> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126555
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126555> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126822
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/126822> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127023
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127023> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127026
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127026> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127029
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127029> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127138
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127138> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127140
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127140> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127143
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127143> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127146
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127146> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127160
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127160> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127419
-<https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/127419> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/II
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/II> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IIa
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IIa> rdf:type owl:NamedIndividual ,
-                                                                              :SubDivision ;
-                                                                     :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/II> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IV
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IV> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IVa
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IVa> rdf:type owl:NamedIndividual ,
-                                                                              :SubDivision ;
-                                                                     :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/IV> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/V
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/V> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VI
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VI> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> rdf:type owl:NamedIndividual ,
-                                                                              :Division ;
-                                                                     :locatedIn <https://vocab.ices.dk/services/rdf/collection/IC_Sub-areas/27.7> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII> rdf:type owl:NamedIndividual .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIa
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIa> rdf:type owl:NamedIndividual ,
-                                                                                :SubDivision ;
-                                                                       :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIb
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIb> rdf:type owl:NamedIndividual ,
-                                                                                :SubDivision ;
-                                                                       :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIc
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIIc> rdf:type owl:NamedIndividual ,
-                                                                                :SubDivision ;
-                                                                       :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIId
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIId> rdf:type owl:NamedIndividual ,
-                                                                                :SubDivision ;
-                                                                       :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIa
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIa> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIaNorth
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIaNorth> rdf:type owl:NamedIndividual ,
-                                                                                    :SubDivision ;
-                                                                           :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIa> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIaSouth
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIaSouth> rdf:type owl:NamedIndividual ,
-                                                                                    :SubDivision ;
-                                                                           :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIa> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIb
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIb> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIc
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIc> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIId
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIId> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIe
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIe> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIg
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIg> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIh
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIh> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIj
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIj> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIk
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIIk> rdf:type owl:NamedIndividual ,
-                                                                               :SubDivision ;
-                                                                      :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VII> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIa
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIa> rdf:type owl:NamedIndividual ,
-                                                                              :SubDivision ;
-                                                                     :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VI> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIaNorth
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIaNorth> rdf:type owl:NamedIndividual ,
-                                                                                   :SubDivision ;
-                                                                          :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIa> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIaSouth
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIaSouth> rdf:type owl:NamedIndividual ,
-                                                                                   :SubDivision ;
-                                                                          :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIa> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIb
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VIb> rdf:type owl:NamedIndividual ,
-                                                                              :SubDivision ;
-                                                                     :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/VI> .
-
-
-###  https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/Vb
-<https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/Vb> rdf:type owl:NamedIndividual ,
-                                                                             :SubDivision ;
-                                                                    :locatedIn <https://vocab.ices.dk/services/rdf/collection/TS_ICES_Division/V> .
+:VesselID rdf:type owl:Class ;
+          rdfs:comment "This object lists a vessel ID that corresponds to a sample header" ;
+          rdfs:label "VesselID" .
 
 
 #################################################################
 #    Annotations
 #################################################################
 
-<http://purl.org/dc/terms/audience> rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/sam-lite> .
+<http://purl.org/dc/elements/1.1/> <http://purl.org/dc/terms/publisher> <http://purl.org/dc/aboutdcmi#DCMI> ;
+                                   <http://purl.org/dc/terms/title> "Dublin Core Metadata Element Set, Version 1.1"@en ;
+                                   <http://purl.org/dc/terms/modified> "2012-06-14"^^xsd:date .
+
+
+<http://purl.org/dc/elements/1.1/contributor> <http://purl.org/dc/terms/description> "The guidelines for using names of persons or organizations as creators also apply to contributors.  Typically, the name of a Contributor should be used to indicate the entity."@en ;
+                                              rdfs:label "Contributor"@en ;
+                                              rdfs:comment "An entity responsible for making contributions to the resource."@en ;
+                                              <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                              <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/contributor) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                              rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
+
+
+<http://purl.org/dc/elements/1.1/coverage> <http://purl.org/dc/terms/description> "Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names [[TGN](https://www.getty.edu/research/tools/vocabulary/tgn/index.html)]. Where appropriate, named places or time periods may be used in preference to numeric identifiers such as sets of coordinates or date ranges."@en ;
+                                           <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/coverage) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                           rdfs:comment "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant."@en ;
+                                           <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                           rdfs:label "Coverage"@en .
+
+
+<http://purl.org/dc/elements/1.1/date> <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                       rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                       <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/date) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                       rdfs:comment "A point or period of time associated with an event in the lifecycle of the resource."@en ;
+                                       <http://purl.org/dc/terms/description> "Date may be used to express temporal information at any level of granularity.  Recommended practice is to express the date, date/time, or period of time according to ISO 8601-1 [[ISO 8601-1](https://www.iso.org/iso-8601-date-and-time-format.html)] or a published profile of the ISO standard, such as the W3C Note on Date and Time Formats [[W3CDTF](https://www.w3.org/TR/NOTE-datetime)] or the Extended Date/Time Format Specification [[EDTF](http://www.loc.gov/standards/datetime/)].  If the full date is unknown, month and year (YYYY-MM) or just year (YYYY) may be used. Date ranges may be specified using ISO 8601 period of time specification in which start and end dates are separated by a '/' (slash) character.  Either the start or end date may be missing."@en ;
+                                       rdfs:label "Date"@en .
+
+
+<http://purl.org/dc/elements/1.1/format> <http://purl.org/dc/terms/description> "Recommended practice is to use a controlled vocabulary where available. For example, for file formats one could use the list of Internet Media Types [[MIME](https://www.iana.org/assignments/media-types/media-types.xhtml)]."@en ;
+                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/format) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                         rdfs:label "Format"@en ;
+                                         rdfs:comment "The file format, physical medium, or dimensions of the resource."@en ;
+                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
+
+
+<http://purl.org/dc/elements/1.1/language> <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                           <http://purl.org/dc/terms/description> "Recommended practice is to use either a non-literal value representing a language from a controlled vocabulary such as ISO 639-2 or ISO 639-3, or a literal value consisting of an IETF Best Current Practice 47 [[IETF-BCP47](https://tools.ietf.org/html/bcp47)] language tag."@en ;
+                                           rdfs:label "Language"@en ;
+                                           <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/language) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                           rdfs:comment "A language of the resource."@en .
+
+
+<http://purl.org/dc/elements/1.1/publisher> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                            <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                            rdfs:label "Publisher"@en ;
+                                            <http://purl.org/dc/terms/description> "Examples of a Publisher include a person, an organization, or a service. Typically, the name of a Publisher should be used to indicate the entity."@en ;
+                                            rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                            rdfs:comment "An entity responsible for making the resource available."@en .
+
+
+<http://purl.org/dc/elements/1.1/relation> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/relation) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                           rdfs:label "Relation"@en ;
+                                           <http://purl.org/dc/terms/description> "Recommended practice is to identify the related resource by means of a URI. If this is not possible or feasible, a string conforming to a formal identification system may be provided."@en ;
+                                           <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                           rdfs:comment "A related resource."@en ;
+                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
+
+
+<http://purl.org/dc/elements/1.1/subject> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/subject) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                          <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
+                                          <http://purl.org/dc/terms/description> "Typically, the subject will be represented using keywords, key phrases, or classification codes.  Recommended best practice is to use a controlled vocabulary."@en ;
+                                          rdfs:label "Subject"@en ;
+                                          rdfs:comment "The topic of the resource."@en ;
+                                          rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
+
+
+<http://purl.org/dc/elements/1.1/type> rdfs:comment "The nature or genre of the resource."@en ;
+                                       <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/type) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
+                                       rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
+                                       rdfs:label "Type"@en ;
+                                       <http://purl.org/dc/terms/description> "Recommended practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [[DCMI-TYPE](http://dublincore.org/documents/dcmi-type-vocabulary/)]. To describe the file format, physical medium, or dimensions of the resource, use the Format element."@en ;
+                                       <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
