@@ -1,1037 +1,946 @@
-@prefix : <http://marine.ie/stock#> .
+@prefix : <http://www.marine.ie/rdbes_v1#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://marine.ie/stock> .
+@base <http://www.marine.ie/rdbes_v1> .
 
-<http://marine.ie/stock> rdf:type owl:Ontology ;
-                          <http://purl.org/dc/elements/1.1/creator> """Simon Jonathan David COX
-CSIRO""" ;
-                          <http://purl.org/dc/elements/1.1/description> "An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements / OGC Abstract Specification - Topic 20." ;
-                          <http://purl.org/dc/elements/1.1/rights> "Copyright © 2014, 2015, 2016 CSIRO" ;
-                          <http://purl.org/dc/elements/1.1/source> "ISO 19156:2011" ;
-                          <http://purl.org/dc/elements/1.1/title> "OWL for Observations" ;
-                          <http://purl.org/dc/terms/created> "2014-10-07"^^xsd:date ;
-                          <http://purl.org/dc/terms/creator> <http://orcid.org/0000-0002-3884-3420> ;
-                          <http://purl.org/dc/terms/license> <http://creativecommons.org/licenses/by/3.0/au/> ;
-                          <http://purl.org/dc/terms/modified> "2016-10-27"^^xsd:date ;
-                          <http://purl.org/vocab/vann/preferredNamespacePrefix> "oml:" ;
-                          <http://purl.org/vocab/vann/preferredNamespaceUri> <http://def.seegrid.csiro.au/ontology/om/om-lite#> ;
-                          rdfs:comment """An OWL representation of the Observation Schema described in clauses 7-8 of ISO 19156:2011 Geographic Information - Observations and Measurements. 
-In contrast to previous versions developed through SSN and in conjunction with ISO 19150-2, this ontology has minimal dependencies on existing ontologies, particularly those that trigger extended chains of imports. Stub classes are provided for time, geometry and measure (scaled number), which can be substituted at run-time by a suitable concrete representation of the concept. 
-Observation Collection has been (re-)introduced, to support the common case where a collection is homogeneous in one or more properties (feature-of-interest, phenomenon-time, observed-property, units-of-measure, procedure). The value of the common property may be recorded against the collection instead of repetitively against every member.   
-
-In this revision, the observation result is an Object Property, in order to conform to strict OWL2 semantics. The type constraints on Observation specializations TruthObservation and CountObservation have been changed, so that the range of oml:result is an Object containing the xsd type, rather than the data-type itself. """ ;
-                          rdfs:label "OWL for Observations" ;
-                          rdfs:seeAlso <http://www.semantic-web-journal.net/content/ontology-observations-and-sampling-features-alignments-existing-models-0> ;
-                          owl:priorVersion <http://def.seegrid.csiro.au/isotc211/iso19156/2011/observation> ;
-                          <http://www.w3.org/2004/02/skos/core#changeNote> "2015-03-06	Added samplingStrategy property, in order to separate sampling from the feature of interest" ,
-                                                                           "2015-08-18 Added ObservationCollection class; added to domain of key Observation properties (except oml:result) to support inheritance of common properties from a container. " ,
-                                                                           "2015-11-17 Added oml:member property, with fixed domain (ObservationCollection) and range (Observation), in place of rdfs:member, which is not liked by OWL-API. " ,
-                                                                           "2016-01-20 In order to satisfy OWLAPI requirements, changed oml:result to an ObjectProperty; changed the constraints on CountObservation and TruthObservation to refer to newly created CountObject and TruthObject to encapsulate the values as objects. " ,
-                                                                           "2016-10-27 Add stimulus-time property" .
-
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://purl.org/dc/elements/1.1/creator
-<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty ;
-                                          <http://purl.org/dc/terms/description> "Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity."@en ;
-                                          <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                          rdfs:comment "An entity primarily responsible for making the resource."@en ;
-                                          rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                          rdfs:label "Creator"@en ;
-                                          <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/elements/1.1/description
-<http://purl.org/dc/elements/1.1/description> rdf:type owl:AnnotationProperty ;
-                                              <http://purl.org/dc/terms/description> "Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."@en ;
-                                              <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                              rdfs:comment "An account of the resource."@en ;
-                                              rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                              rdfs:label "Description"@en ;
-                                              <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/description) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/elements/1.1/identifier
-<http://purl.org/dc/elements/1.1/identifier> rdf:type owl:AnnotationProperty ;
-                                             <http://purl.org/dc/terms/description> "Recommended practice is to identify the resource by means of a string conforming to an identification system."@en ;
-                                             <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                             rdfs:comment "An unambiguous reference to the resource within a given context."@en ;
-                                             rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                             rdfs:label "Identifier"@en ;
-                                             <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/identifier) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/elements/1.1/rights
-<http://purl.org/dc/elements/1.1/rights> rdf:type owl:AnnotationProperty ;
-                                         <http://purl.org/dc/terms/description> "Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."@en ;
-                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                         rdfs:comment "Information about rights held in and over the resource."@en ;
-                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                         rdfs:label "Rights"@en ;
-                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/rights) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/elements/1.1/source
-<http://purl.org/dc/elements/1.1/source> rdf:type owl:AnnotationProperty ;
-                                         <http://purl.org/dc/terms/description> "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."@en ;
-                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                         rdfs:comment "A related resource from which the described resource is derived."@en ;
-                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                         rdfs:label "Source"@en ;
-                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/source) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/elements/1.1/title
-<http://purl.org/dc/elements/1.1/title> rdf:type owl:AnnotationProperty ;
-                                        <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                        rdfs:comment "A name given to the resource."@en ;
-                                        rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                        rdfs:label "Title"@en ;
-                                        <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/title) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en .
-
-
-###  http://purl.org/dc/terms/created
-<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/creator
-<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/description
-<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/issued
-<http://purl.org/dc/terms/issued> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/license
-<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/modified
-<http://purl.org/dc/terms/modified> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/publisher
-<http://purl.org/dc/terms/publisher> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/title
-<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/vocab/vann/preferredNamespacePrefix
-<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/vocab/vann/preferredNamespaceUri
-<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#altLabel
-<http://www.w3.org/2004/02/skos/core#altLabel> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#changeNote
-<http://www.w3.org/2004/02/skos/core#changeNote> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#definition
-<http://www.w3.org/2004/02/skos/core#definition> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#historyNote
-<http://www.w3.org/2004/02/skos/core#historyNote> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#note
-<http://www.w3.org/2004/02/skos/core#note> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#prefLabel
-<http://www.w3.org/2004/02/skos/core#prefLabel> rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Datatypes
-#################################################################
-
-###  http://www.w3.org/2001/XMLSchema#date
-xsd:date rdf:type rdfs:Datatype .
-
+<http://www.marine.ie/rdbes_v1> rdf:type owl:Ontology ;
+                                 owl:imports <http://www.w3.org/ns/sosa/> ,
+                                             <http://www.w3.org/ns/ssn/> .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#context
-<http://def.seegrid.csiro.au/ontology/om/om-lite#context> rdf:type owl:ObjectProperty ;
-                                                          rdfs:domain [ rdf:type owl:Class ;
-                                                                        owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                      <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                    )
-                                                                      ] ;
-                                                          rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationContext> ;
-                                                          <http://purl.org/dc/terms/description> "link to related observation" ;
-                                                          rdfs:comment """link to related observation
-
-The first half of the property named 'relatedObservation' in the UML model. (The rule for implementing association classes needs clarification.)""" ;
-                                                          rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                          rdfs:label "observation context"@en .
+###  http://www.marine.ie/rdbes_v1#hasArea
+:hasArea rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :LandingEventID ;
+         rdfs:range :Area ;
+         rdfs:comment "Relation linking level ID and ICES area"@en ;
+         rdfs:label "has area"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#featureOfInterest
-<http://def.seegrid.csiro.au/ontology/om/om-lite#featureOfInterest> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain [ rdf:type owl:Class ;
-                                                                                  owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                                <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                              )
-                                                                                ] ;
-                                                                    rdfs:comment """feature of interest of an observation
-
-Links the Observation to the Feature that is the ultimate subject of the observation and carries the observed property. This feature is the real-world object whose properties are under observation. An observation instance serves as a propertyValueProvider for its feature-of-interest.""" ;
-                                                                    rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                    rdfs:label "feature of interest"@en ;
-                                                                    <http://www.w3.org/2004/02/skos/core#definition> "Links the Observation to the Feature that is the ultimate subject of the observation and carries the observed property. This feature is the real-world object whose properties are under observation. An observation instance serves as a propertyValueProvider for its feature-of-interest." .
+###  http://www.marine.ie/rdbes_v1#hasArrivalLocation
+:hasArrivalLocation rdf:type owl:ObjectProperty ;
+                    rdfs:comment "Relation linking fishing trip level ID to arrival location"@en ;
+                    rdfs:label "has arrival location"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#member
-<http://def.seegrid.csiro.au/ontology/om/om-lite#member> rdf:type owl:ObjectProperty ;
-                                                         owl:inverseOf <http://def.seegrid.csiro.au/ontology/om/om-lite#memberOf> ;
-                                                         rdfs:domain <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection> ;
-                                                         rdfs:range [ rdf:type owl:Class ;
-                                                                      owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                    <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                  )
-                                                                    ] ;
-                                                         rdfs:comment "links from a collection to a member collection or observation" ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                         rdfs:label "has member" .
+###  http://www.marine.ie/rdbes_v1#hasBioVarFishID
+:hasBioVarFishID rdf:type owl:ObjectProperty ;
+                 rdfs:comment "Relation linking sample level id and national unique fish ID"@en ;
+                 rdfs:label "has bio var fish ID"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#memberOf
-<http://def.seegrid.csiro.au/ontology/om/om-lite#memberOf> rdf:type owl:ObjectProperty ;
-                                                           rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                           rdfs:label "is member of" .
+###  http://www.marine.ie/rdbes_v1#hasBioVarID
+:hasBioVarID rdf:type owl:ObjectProperty ;
+             rdfs:comment "Relation linking national unique fish ID and bio var id"@en ;
+             rdfs:label "has bio var id"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#observedProperty
-<http://def.seegrid.csiro.au/ontology/om/om-lite#observedProperty> rdf:type owl:ObjectProperty ,
-                                                                            owl:FunctionalProperty ;
-                                                                   rdfs:domain [ rdf:type owl:Class ;
-                                                                                 owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                               <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                             )
-                                                                               ] ;
-                                                                   rdfs:comment """property whose value is the result of the observation
-
-Link from the Observation to the PropertyType for which the Observation:result provides an estimate of its value. 
-
-The observed property shall be a phenomenon associated with the feature-of-interest.""" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                   rdfs:label "observed property"@en ;
-                                                                   <http://www.w3.org/2004/02/skos/core#definition> """property whose value is the result of the observation
-
-Link from the Observation to the PropertyType for which the Observation:result provides an estimate of its value. 
-
-The observed property shall be a phenomenon associated with the feature-of-interest.
-
-The target of this shall describe a property that is either assignable or observable such as “temperature”, “height”, “colour”, “material”. A property type may be an operation or function such as a spatiotemporal coverage. Property-type definitions may be organized into a hierarchy or ontology and managed in a register and catalogued to support discovery functions. The observed property supports semantic or thematic classification of observations, which is useful for discovery and data fusion.
-
-NOTE In general, the value of a specific observedProperty can be associated with different feature types in different observations, thus allowing the results of observations made in different projects or campaigns, and even from different disciplines, to be combined when required. A property-type register used in observations is most useful if each property type is not tied to a single feature type, or if equivalence relationships between similar property types from different feature types are provided.""" .
+###  http://www.marine.ie/rdbes_v1#hasCatchCategory
+:hasCatchCategory rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain :SampleID ;
+                  rdfs:range :CatchCategory ;
+                  rdfs:comment "Relation linking sample level ID and catch category"@en ;
+                  rdfs:label "has catch category"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#phenomenonTime
-<http://def.seegrid.csiro.au/ontology/om/om-lite#phenomenonTime> rdf:type owl:ObjectProperty ;
-                                                                 rdfs:domain [ rdf:type owl:Class ;
-                                                                               owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                             <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                           )
-                                                                             ] ;
-                                                                 rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject> ;
-                                                                 rdfs:comment "time at which the estimate of the property that is the result of the observation is associated with the feature of interest" ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                 rdfs:label "phenomenon time"@en ;
-                                                                 <http://www.w3.org/2004/02/skos/core#definition> """The attribute phenomenonTime:TM_Object shall describe the time that the result (7.2.2.9) applies to the property of the feature-of-interest (7.2.2.7). This is often the time of interaction by a sampling procedure (9.1.3) or observation procedure (7.2.2.10) with a real-world feature.
-
-NOTE The phenomenonTime is the temporal parameter normally used in geospatial analysis of the result.
-
-If the observedProperty of an observation is ‘occurrence time’ then the result should be the same as the phenomenonTime.""" .
+###  http://www.marine.ie/rdbes_v1#hasCatchFraction
+:hasCatchFraction rdf:type owl:ObjectProperty ;
+                  rdfs:comment "Relation linking species selection ID with catch fratction"@en ;
+                  rdfs:label "has catch fraction"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#procedure
-<http://def.seegrid.csiro.au/ontology/om/om-lite#procedure> rdf:type owl:ObjectProperty ;
-                                                            rdfs:domain [ rdf:type owl:Class ;
-                                                                          owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                        <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                      )
-                                                                        ] ;
-                                                            rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#Process> ;
-                                                            rdfs:comment "re-usable procedure used in making observation. Typically a sensor or sensor-system, algorithm, computational procedure." ;
-                                                            rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                            rdfs:label "observation procedure"@en ;
-                                                            <http://www.w3.org/2004/02/skos/core#definition> """The association ProcessUsed shall link the OM_Observation to the OM_Process (7.2.3) used to generate the result. The process has the role procedure with respect to the observation. A process might be responsible for more than one generatedObservation.
-
-The OM_Process shall be suitable for the observed property. As a corollary, details of the observed property are constrained by the procedure used.
-
-EXAMPLE Observed radiance wavelength is determined by the response characteristics of the sensor.
-
-A description of the observation procedure provides or implies an indication of the reliability or quality of the observation result.""" .
+###  http://www.marine.ie/rdbes_v1#hasCatchRegistration
+:hasCatchRegistration rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:domain :LandingEventID ;
+                      rdfs:range :CatchRegistration ;
+                      rdfs:comment "Relation linking landing event id to catch registration"@en ;
+                      rdfs:label "has catch registration"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#relatedObservation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#relatedObservation> rdf:type owl:ObjectProperty ;
-                                                                     rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ;
-                                                                     rdfs:comment "related observation" ;
-                                                                     rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                     rdfs:label "related observation"@en .
+###  http://www.marine.ie/rdbes_v1#hasCertaintyQualitative
+:hasCertaintyQualitative rdf:type owl:ObjectProperty ;
+                         rdfs:comment "Relation linking national unique fish id (BioVarFishID) with certainty qualitative"@en ;
+                         rdfs:label "hasCertaintyQualitative"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#result
-<http://def.seegrid.csiro.au/ontology/om/om-lite#result> rdf:type owl:ObjectProperty ,
-                                                                  owl:FunctionalProperty ;
-                                                         rdfs:domain <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ;
-                                                         rdfs:comment "estimate of the value of the observed property" ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                         rdfs:label "observation result"@en ;
-                                                         <http://www.w3.org/2004/02/skos/core#definition> """The association Range shall link the OM_Observation to the value generated by the procedure. The value has the role result with respect to the observation. The type of the result is shown as “Any”, since it may represent the value of any feature property.
-
-NOTE 1 OGC SWE Common [20] provides a model suitable for describing many kinds of observation results.
-
-The type of the observation result shall be consistent with the observed property, and the scale or scope for the value shall be consistent with the quantity or category type. If the observed property (7.2.2.8) is a spatial operation or function, the type of the result may be a coverage.
-
-NOTE 2 In some contexts, particularly in earth and environmental sciences, the term “observation” is used to refer to the result itself.""" .
+###  http://www.marine.ie/rdbes_v1#hasClassMeasured
+:hasClassMeasured rdf:type owl:ObjectProperty ;
+                  rdfs:comment "Relation linking fishing measure level ID and length of weight class measured"@en ;
+                  rdfs:label "has class measured"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#role
-<http://def.seegrid.csiro.au/ontology/om/om-lite#role> rdf:type owl:ObjectProperty ;
-                                                       rdfs:domain <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationContext> ;
-                                                       rdfs:comment "role of related observation with respect to the observation of interest" ;
-                                                       rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                       rdfs:label "role"@en .
+###  http://www.marine.ie/rdbes_v1#hasClusterName
+:hasClusterName rdf:type owl:ObjectProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( :LandingEventID
+                                            :OnshoreEventID
+                                            :SpeciesSelectionID
+                                          )
+                            ] ;
+                rdfs:range :ClusterName ;
+                rdfs:comment "Relation linking ID and cluster name"@en ;
+                rdfs:label "has cluster name"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#samplingStrategy
-<http://def.seegrid.csiro.au/ontology/om/om-lite#samplingStrategy> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:domain [ rdf:type owl:Class ;
-                                                                                 owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                               <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                             )
-                                                                               ] ;
-                                                                   rdfs:comment """Links to a feature intended to sample the real-world object, as described in Clause 9 of ISO 19156:2011. 
-
-N.B. this formulation varies from the UML model in ISO 19156, in which a sampling-feature is substitutable for the feature-of-interest. In this more explicit formulation, the (mandatory) feature-of-interest always refers to the ultimate feature of interest, whose type can carry the observed property, and the (optional) sampling strategy allows the sampling feature to be made explicit as an additional relationship. This overcomes some semantic sleight-of-hand in ISO 19156, in which the constraint the the observed property was commensurate with the feature-of-interest was allowed to be 'transitive' via the sampledFeature property.""" ,
-                                                                                "description of the sampling strategy used in an observation (usually a sampling-feature). " ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                   rdfs:label "sampling strategy"@en ;
-                                                                   <http://www.w3.org/2004/02/skos/core#definition> "Links to a feature intended to sample the real-world object, as described in Clause 9 of ISO 19156:2011. " .
+###  http://www.marine.ie/rdbes_v1#hasClustering
+:hasClustering rdf:type owl:ObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :LandingEventID
+                                           :OnshoreEventID
+                                           :SpeciesSelectionID
+                                         )
+                           ] ;
+               rdfs:range :Clustering ;
+               rdfs:comment "Relation between level ID and clustering"@en ;
+               rdfs:label "has clustering"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#stimulusTime
-<http://def.seegrid.csiro.au/ontology/om/om-lite#stimulusTime> rdf:type owl:ObjectProperty ;
-                                                               rdfs:domain [ rdf:type owl:Class ;
-                                                                             owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                           <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                         )
-                                                                           ] ;
-                                                               rdfs:range <http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject> ;
-                                                               rdfs:comment "the time when the sensor stimulus occurred. Usually the beginning of the observation activity (the result time is the end). " ;
-                                                               rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                               rdfs:label "Stimulus time" ;
-                                                               <http://www.w3.org/2004/02/skos/core#definition> """the time when the sensor stimulus occurred. Usually the beginning of the observation activity, with the result time being the end. May be the same as the phenomenon-time (e.g. most monitoring applications). May define the time of observations used to condition simulations and forecasting. 
-
-The relative positions of stimulus-time, phenomenon-time, result-time define whether the observation is monitoring, forecasting, or retrospective, as follows:
-* st = pt <= rt    is monitoring
-* st < rt < pt   is forecast
-* pt < st <=rt   is retrospective (e.g. geology, archeology) """ ;
-                                                               <http://www.w3.org/2004/02/skos/core#historyNote> "This property was introduced after discussions in the jint W3C/OGC Spatial Data on the Web Working Group in October 2016" .
+###  http://www.marine.ie/rdbes_v1#hasConversionFactorAssessment
+:hasConversionFactorAssessment rdf:type owl:ObjectProperty ;
+                               rdfs:comment "Relation linking level ID and conversion factor assessment"@en ;
+                               rdfs:label "has conversion factor assessment"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#uom
-<http://def.seegrid.csiro.au/ontology/om/om-lite#uom> rdf:type owl:ObjectProperty ;
-                                                      rdfs:domain [ rdf:type owl:Class ;
-                                                                    owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                  <http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure>
-                                                                                )
-                                                                  ] ;
-                                                      rdfs:comment "Unit of measure or scale" ;
-                                                      rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> .
+###  http://www.marine.ie/rdbes_v1#hasEncryptedVesselID
+:hasEncryptedVesselID rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:domain :LandingEventID ;
+                      rdfs:range :EncryptedVesselID ;
+                      rdfs:comment "Relation linking landing event id and encrypted vessel ID"@en ;
+                      rdfs:label "has encrypted vessel ID"@en .
 
 
-###  http://marine.ie/stock#hasAphiaID
-:hasAphiaID rdf:type owl:ObjectProperty ;
-            owl:inverseOf :isAphiaIDOf ;
-            rdfs:domain :Sample ;
-            rdfs:range :AphiaID ;
-            rdfs:comment "Links a sample with an aphia ID" ;
-            rdfs:label "has AphiaID" .
+###  http://www.marine.ie/rdbes_v1#hasEncrytpedVesselCode
+:hasEncrytpedVesselCode rdf:type owl:ObjectProperty ;
+                        rdfs:comment "Relation linking fishing level ID and encrypted vessel code"@en ;
+                        rdfs:label "has encrypted vessel code"@en .
 
 
-###  http://marine.ie/stock#hasCruiseCode
-:hasCruiseCode rdf:type owl:ObjectProperty ;
-               owl:inverseOf :isCruiseCodeOf ;
-               rdfs:domain :Trip ;
-               rdfs:range :CruiseCode ;
-               rdfs:comment "links trip with cruise code" ;
-               rdfs:label "has cruise code" .
+###  http://www.marine.ie/rdbes_v1#hasFrequencyMeasureID
+:hasFrequencyMeasureID rdf:type owl:ObjectProperty ;
+                       rdfs:comment "A relationship between SampleID and FrequencyMeasureID" ;
+                       rdfs:label "has frequency Meaure ID" .
 
 
-###  http://marine.ie/stock#hasGearCode
-:hasGearCode rdf:type owl:ObjectProperty ;
-             owl:inverseOf :isGearCodeOf ;
-             rdfs:domain :SampleHeader ;
-             rdfs:range :GearCode ;
-             rdfs:comment "Links sampleHeader with gear code" ;
-             rdfs:label "has gear code" .
+###  http://www.marine.ie/rdbes_v1#hasGSASubarea
+:hasGSASubarea rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :LandingEventID
+                                           :SampleID
+                                         )
+                           ] ;
+               rdfs:range :GSASubarea ;
+               rdfs:comment "Relation linking level id and GSA subarea"@en .
 
 
-###  http://marine.ie/stock#hasPort
-:hasPort rdf:type owl:ObjectProperty ;
-         owl:inverseOf :isPortOf ;
-         rdfs:domain :Trip ;
-         rdfs:range :Port ;
-         rdfs:comment "This links trip ID with Port" ;
-         rdfs:label "has Port" .
+###  http://www.marine.ie/rdbes_v1#hasGearType
+:hasGearType rdf:type owl:ObjectProperty ;
+             rdfs:comment "Relation linking landing event id to gear type"@en ;
+             rdfs:label "has gear type"@en .
 
 
-###  http://marine.ie/stock#hasPresentation
+###  http://www.marine.ie/rdbes_v1#hasLandingCountry
+:hasLandingCountry rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :LandingEventID ;
+                   rdfs:range :LandingCountry ;
+                   rdfs:comment "Relation linking landing event id and landing country"@en ;
+                   rdfs:label "has landing country"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasLandingEventID
+:hasLandingEventID rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :OnshoreEventID ;
+                   rdfs:range :LandingEventID ;
+                   rdfs:comment "Relation linking onshore event ID and landing event id"@en ;
+                   rdfs:label "has landing event id"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasMetier6
+:hasMetier6 rdf:type owl:ObjectProperty ;
+            rdfs:comment "Relation between level ID and Metier 6 fishing activity"@en ;
+            rdfs:label "has metier 6"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasMitigationDevice
+:hasMitigationDevice rdf:type owl:ObjectProperty ;
+                     rdfs:comment "Relation linking landing event ID and bycatch mitigation device"@en ;
+                     rdfs:label "has mitigation device"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasObservationActivityType
+:hasObservationActivityType rdf:type owl:ObjectProperty ;
+                            rdfs:domain :SpeciesSelectionID ;
+                            rdfs:range :ObservationActivityType ;
+                            rdfs:comment "Registers the part of the fishing operation that was sampled. Conceptually, fishing operations are considered divided into a SLIPPING stage (Slip), DROP-OUT stage (Drop), a PRESORTING stage (Presort) and a SORTING stage (Sort), etc."@en ;
+                            rdfs:label "has observation activity type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasObservationType
+:hasObservationType rdf:type owl:ObjectProperty ;
+                    rdfs:domain :SpeciesSelectionID ;
+                    rdfs:range :ObservationType ;
+                    rdfs:comment "Relation linking species selection level ID with observation type"@en ;
+                    rdfs:label "has observation type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasOnshoreEventID
+:hasOnshoreEventID rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :SamplingDetailID ;
+                   rdfs:range :OnshoreEventID ;
+                   rdfs:comment "Relation linking Sampling detail ID and Onshore event ID"@en ;
+                   rdfs:label "has onshore event ID"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasPresentation
 :hasPresentation rdf:type owl:ObjectProperty ;
-                 owl:inverseOf :isPresentationOf ;
-                 rdfs:domain :Sample ;
-                 rdfs:range :Presentation ;
-                 rdfs:comment "links sample with presentation type eg round, gutted" ;
-                 rdfs:label "has presentation" .
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 rdfs:comment "Relation between sample or specimen and presentation entity"@en ;
+                 rdfs:label "has presentation"@en .
 
 
-###  http://marine.ie/stock#hasSample
-:hasSample rdf:type owl:ObjectProperty ;
-           owl:inverseOf :isSampleOf ;
-           rdfs:domain :SampleHeader ;
-           rdfs:range :Sample ;
-           rdfs:comment "Links sampleHeader ID with sample ID" ;
-           rdfs:label "has sample" .
+###  http://www.marine.ie/rdbes_v1#hasRecordType
+:hasRecordType rdf:type owl:ObjectProperty ;
+               rdfs:comment "Relation between some ID number and RecordType entity"@en ;
+               rdfs:label "has record type"@en .
 
 
-###  http://marine.ie/stock#hasSampleHeader
-:hasSampleHeader rdf:type owl:ObjectProperty ;
-                 owl:inverseOf :isSampleHeaderOf ;
-                 rdfs:domain :Trip ;
-                 rdfs:range :SampleHeader ;
-                 rdfs:comment "Links sample header ID with sample ID" ;
-                 rdfs:label "has sampleHeader" .
+###  http://www.marine.ie/rdbes_v1#hasSampleID
+:hasSampleID rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :SpeciesSelectionID ;
+             rdfs:range :SampleID ;
+             rdfs:comment "Relation linking species selection level ID and sample level ID"@en .
 
 
-###  http://marine.ie/stock#hasSamplerID
-:hasSamplerID rdf:type owl:ObjectProperty ;
-              rdfs:domain :Trip ;
-              rdfs:range :SamplerID ;
-              rdfs:comment "Links trip with SamplerID" ;
-              rdfs:label "has samplerID" .
+###  http://www.marine.ie/rdbes_v1#hasSampleInstitute
+:hasSampleInstitute rdf:type owl:ObjectProperty ;
+                    rdfs:domain :SamplingDetailID ;
+                    rdfs:range :SamplingInstitute ;
+                    rdfs:comment "Relation linking sampling detail ID and sampling institute"@en .
 
 
-###  http://marine.ie/stock#hasSizeCategory
-:hasSizeCategory rdf:type owl:ObjectProperty ;
-                 owl:inverseOf :isSizeCategoryOf ;
-                 rdfs:domain :Sample ;
-                 rdfs:range :SizeCategory ;
-                 rdfs:comment "Links sample ID with size category type" ;
-                 rdfs:label "has size category" .
+###  http://www.marine.ie/rdbes_v1#hasSampleLocode
+:hasSampleLocode rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 rdfs:domain :OnshoreEventID ;
+                 rdfs:range :SampleLocode ;
+                 rdfs:comment "Relation linking onshore even it and sample locode"@en ;
+                 rdfs:label "has sample locode"@en .
 
 
-###  http://marine.ie/stock#hasSpecimen
-:hasSpecimen rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#member> ;
-             owl:inverseOf :isSpecimenOf ;
-             rdfs:domain :Sample ;
-             rdfs:range :Specimen ;
-             rdfs:comment "Links a sample ID with a Specimen ID" ;
-             rdfs:label "has specimen" .
+###  http://www.marine.ie/rdbes_v1#hasSampler
+:hasSampler rdf:type owl:ObjectProperty ;
+            rdfs:comment "Relation linking fishing trip level ID with sampler"@en ;
+            rdfs:label "has sampler"@en .
 
 
-###  http://marine.ie/stock#hasVesselID
-:hasVesselID rdf:type owl:ObjectProperty ;
-             owl:inverseOf :isVesselIDOf ;
-             rdfs:domain :SampleHeader ;
-             rdfs:range :VesselID ;
-             rdfs:comment "Links sample header ID with vessel ID" ;
-             rdfs:label "has vessel ID" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingCountry
+:hasSamplingCountry rdf:type owl:ObjectProperty ;
+                    rdfs:domain :SamplingDetailID ;
+                    rdfs:range :SamplingCountry ;
+                    rdfs:comment "Relation linking sampling detail ID and sampling country"@en ;
+                    rdfs:label "has sampling country"@en .
 
 
-###  http://marine.ie/stock#isAphiaIDOf
-:isAphiaIDOf rdf:type owl:ObjectProperty ;
-             rdfs:domain :AphiaID ;
-             rdfs:range :Sample ;
-             rdfs:comment "Links aphiaID to sample" ;
-             rdfs:label "is Aphia ID of" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingDetailID
+:hasSamplingDetailID rdf:type owl:ObjectProperty ;
+                     rdfs:comment "Relation linking design level id and sampling detail id"@en ;
+                     rdfs:label "has sampling detail ID"@en .
 
 
-###  http://marine.ie/stock#isCruiseCodeOf
-:isCruiseCodeOf rdf:type owl:ObjectProperty ;
-                rdfs:domain :CruiseCode ;
-                rdfs:range :Trip ;
-                rdfs:comment "Links cruise code with Trip id" ;
-                rdfs:label "is Cruise code of" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingLocation
+:hasSamplingLocation rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain :OnshoreEventID ;
+                     rdfs:range :SamplingLocation ;
+                     rdfs:comment "Relation linking onshore event ID and sampling location"@en ;
+                     rdfs:label "has sampling location"@en .
 
 
-###  http://marine.ie/stock#isGearCodeOf
-:isGearCodeOf rdf:type owl:ObjectProperty ;
-              rdfs:domain :GearCode ;
-              rdfs:range :SampleHeader ;
-              rdfs:comment "Links gear code to SampleHeader" ;
-              rdfs:label "is Gear Code of" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingScheme
+:hasSamplingScheme rdf:type owl:ObjectProperty ;
+                   rdfs:domain <http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID> ;
+                   rdfs:range <urn:absolute:www.marine.ie/rdbes_v1#SamplingScheme> ;
+                   rdfs:label "Relation linking Design ID and sampling scheme"@en ,
+                              "has sampling scheme"@en .
 
 
-###  http://marine.ie/stock#isLocatioOf
-:isLocatioOf rdf:type owl:ObjectProperty ;
-             owl:inverseOf :locatedIn ;
-             rdfs:domain :SubDivision ;
-             rdfs:range :SampleHeader ;
-             rdfs:comment "Links area, subarea, division and subdivisioon" ;
-             rdfs:label "Is location of" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingType
+:hasSamplingType rdf:type owl:ObjectProperty ;
+                 rdfs:comment "Relation linking fishing trip level ID with sampling type"@en ;
+                 rdfs:label "hasSamplingType"@en .
 
 
-###  http://marine.ie/stock#isPortOf
-:isPortOf rdf:type owl:ObjectProperty ;
-          rdfs:domain :Port ;
-          rdfs:range :Trip ;
-          rdfs:comment "Links port with trip ID" ;
-          rdfs:label "is Port of" .
+###  http://www.marine.ie/rdbes_v1#hasSelectionMethod
+:hasSelectionMethod rdf:type owl:ObjectProperty ;
+                    rdfs:comment "Relation between level ID and selection method"@en ;
+                    rdfs:label "has selection method"@en .
 
 
-###  http://marine.ie/stock#isPresentationOf
-:isPresentationOf rdf:type owl:ObjectProperty ;
-                  rdfs:domain :Presentation ;
-                  rdfs:range :Sample ;
-                  rdfs:comment "Links presentation type to sample" ;
-                  rdfs:label "is Presentation of" .
+###  http://www.marine.ie/rdbes_v1#hasSequenceNumber
+:hasSequenceNumber rdf:type owl:ObjectProperty ;
+                   rdfs:comment "Relation linking ID and sequence number"@en ;
+                   rdfs:label "has sequence number"@en .
 
 
-###  http://marine.ie/stock#isSampleHeaderOf
-:isSampleHeaderOf rdf:type owl:ObjectProperty ;
-                  rdfs:domain :SampleHeader ;
-                  rdfs:range :Trip ;
-                  rdfs:comment "Links a sampleheader to a trip id" ;
-                  rdfs:label "is Sample Header of" .
+###  http://www.marine.ie/rdbes_v1#hasSex
+:hasSex rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:domain :SampleID ;
+        rdfs:range :Sex ;
+        rdfs:comment "Relation linking sample level ID with sex of sample"@en ;
+        rdfs:label "has sex"@en .
 
 
-###  http://marine.ie/stock#isSampleOf
-:isSampleOf rdf:type owl:ObjectProperty ;
-            rdfs:domain :Sample ;
-            rdfs:range :SampleHeader ;
-            rdfs:comment "Links sample to sampleHeader" ;
-            rdfs:label "is Sample of" .
+###  http://www.marine.ie/rdbes_v1#hasSpeciesCode
+:hasSpeciesCode rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :SampleID ;
+                rdfs:range :SpeciesCode ;
+                rdfs:comment "Relation linking sample level id with species code of sample"@en ;
+                rdfs:label "has species code"@en .
 
 
-###  http://marine.ie/stock#isSamplerIDof
-:isSamplerIDof rdf:type owl:ObjectProperty ;
-               rdfs:domain :SamplerID ;
-               rdfs:range :Trip ;
-               rdfs:comment "links SamplerID to Trip" ;
-               rdfs:label "is Sampler ID of" .
+###  http://www.marine.ie/rdbes_v1#hasSpeciesListName
+:hasSpeciesListName rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :SpeciesSelectionID ;
+                    rdfs:comment "Relation linking species selection level ID with species list name"@en ;
+                    rdfs:label "has species list name"@en .
 
 
-###  http://marine.ie/stock#isSizeCategoryOf
-:isSizeCategoryOf rdf:type owl:ObjectProperty ;
-                  rdfs:domain :SizeCategory ;
-                  rdfs:range :Sample ;
-                  rdfs:comment "Link size category to sample" ;
-                  rdfs:label "is SizeCategory of" .
+###  http://www.marine.ie/rdbes_v1#hasSpeciesSelectionID
+:hasSpeciesSelectionID rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf owl:topObjectProperty ;
+                       rdfs:domain :LandingEventID ;
+                       rdfs:range :SpeciesSelectionID ;
+                       rdfs:comment "Relation linking landing event level ID and species selection level ID"@en ;
+                       rdfs:label "has species selection ID"@en .
 
 
-###  http://marine.ie/stock#isSpecimenOf
-:isSpecimenOf rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://def.seegrid.csiro.au/ontology/om/om-lite#memberOf> ;
-              rdfs:domain :Specimen ;
-              rdfs:range :Sample ;
-              rdfs:comment "Links specimen to sample" ;
-              rdfs:label "is Specimen of" .
+###  http://www.marine.ie/rdbes_v1#hasSpecimenState
+:hasSpecimenState rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain :SampleID ;
+                  rdfs:range :SpecimenState ;
+                  rdfs:comment "Relation linking sample level ID and specimen state"@en ;
+                  rdfs:label "has specimen state"@en .
 
 
-###  http://marine.ie/stock#isVesselIDOf
-:isVesselIDOf rdf:type owl:ObjectProperty ;
-              rdfs:domain :VesselID ;
-              rdfs:range :SampleHeader ;
-              rdfs:comment "Links vessel ID to sampleHeader" ;
-              rdfs:label "is Vessel ID of" .
+###  http://www.marine.ie/rdbes_v1#hasStateOfProcessing
+:hasStateOfProcessing rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:comment "Relation between sample or specimen and state of processing entity"@en ;
+                      rdfs:label "has state of processing"@en .
 
 
-###  http://marine.ie/stock#locatedIn
-:locatedIn rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf owl:topObjectProperty ;
-           rdfs:domain :SampleHeader ;
-           rdfs:range :SubDivision ;
-           rdfs:comment "links sampleHeader with subdivision, subdivision with division, division with subArea, subArea with area" ;
-           rdfs:label "located in" .
+###  http://www.marine.ie/rdbes_v1#hasStratumName
+:hasStratumName rdf:type owl:ObjectProperty ;
+                rdfs:comment "Relation linking to Stratum name from different levels" ;
+                rdfs:label "has stratum name" .
+
+
+###  http://www.marine.ie/rdbes_v1#hasTypeAssessment
+:hasTypeAssessment rdf:type owl:ObjectProperty ;
+                   rdfs:comment "Relation linking level ID with measurement type for assessment"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasUnitName
+:hasUnitName rdf:type owl:ObjectProperty ;
+             rdfs:comment "Relation linking ID and unit name"@en ;
+             rdfs:label "has unit name"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasUnitType
+:hasUnitType rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:comment "relation linking level ID and unit type"@en ;
+             rdfs:label "has unit type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasValueUnitOrScale
+:hasValueUnitOrScale rdf:type owl:ObjectProperty ;
+                     rdfs:comment "Relation linking national unique fish ID and value unit or scale"@en ;
+                     rdfs:label "has value unit or scale"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#hasYear
+:hasYear rdf:type owl:ObjectProperty ;
+         rdfs:comment "Relation linking Design ID and Year"@en ;
+         rdfs:label "has year"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#isHierarchyCorrect
+:isHierarchyCorrect rdf:type owl:ObjectProperty ;
+                    rdfs:domain <http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID> .
+
+
+###  http://www.marine.ie/rdbes_v1#isUseForCalculateZero
+:isUseForCalculateZero rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf owl:topObjectProperty ;
+                       rdfs:domain :SpeciesSelectionID .
+
+
+###  http://www.marine.ie/rdbes_v1#isYesNo
+:isYesNo rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/ns/sosa/hasFeatureOfInterest
+<http://www.w3.org/ns/sosa/hasFeatureOfInterest> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <http://www.w3.org/ns/sosa/isFeatureOfInterestOf> ;
+                                                 <http://schema.org/domainIncludes> <http://www.w3.org/ns/sosa/Actuation> ,
+                                                                                    <http://www.w3.org/ns/sosa/Observation> ,
+                                                                                    <http://www.w3.org/ns/sosa/Sampling> ;
+                                                 <http://schema.org/rangeIncludes> <http://www.w3.org/ns/sosa/FeatureOfInterest> ,
+                                                                                   <http://www.w3.org/ns/sosa/Sample> ;
+                                                 rdfs:comment "A relation between an Observation and the entity whose quality was observed, or between an Actuation and the entity whose property was modified, or between an act of Sampling and the entity that was sampled."@en ;
+                                                 rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+                                                 rdfs:label "has feature of interest"@en ;
+                                                 <http://www.w3.org/2004/02/skos/core#definition> "A relation between an Observation and the entity whose quality was observed, or between an Actuation and the entity whose property was modified, or between an act of Sampling and the entity that was sampled."@en ;
+                                                 <http://www.w3.org/2004/02/skos/core#example> "For example, in an Observation of the weight of a person, the FeatureOfInterest is the person and the property is its weight."@en .
+
+
+###  http://www.w3.org/ns/sosa/isFeatureOfInterestOf
+<http://www.w3.org/ns/sosa/isFeatureOfInterestOf> rdf:type owl:ObjectProperty ;
+                                                  <http://schema.org/domainIncludes> <http://www.w3.org/ns/sosa/FeatureOfInterest> ,
+                                                                                     <http://www.w3.org/ns/sosa/Sample> ;
+                                                  <http://schema.org/rangeIncludes> <http://www.w3.org/ns/sosa/Actuation> ,
+                                                                                    <http://www.w3.org/ns/sosa/Observation> ,
+                                                                                    <http://www.w3.org/ns/sosa/Sampling> ;
+                                                  rdfs:comment "A relation between a FeatureOfInterest and an Observation about it, an Actuation acting on it, or an act of Sampling that sampled it."@en ;
+                                                  rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+                                                  rdfs:label "is feature of interest of"@en ;
+                                                  <http://www.w3.org/2004/02/skos/core#definition> "A relation between a FeatureOfInterest and an Observation about it, an Actuation acting on it, or an act of Sampling that sampled it."@en .
+
+
+###  http://www.w3.org/ns/sosa/observedProperty
+<http://www.w3.org/ns/sosa/observedProperty> rdf:type owl:ObjectProperty ;
+                                             <http://schema.org/domainIncludes> <http://www.w3.org/ns/sosa/Observation> ;
+                                             <http://schema.org/rangeIncludes> <http://www.w3.org/ns/sosa/ObservableProperty> ;
+                                             rdfs:comment "Relation linking an Observation to the property that was observed. The ObservableProperty should be a property of the FeatureOfInterest (linked by hasFeatureOfInterest) of this Observation."@en ;
+                                             rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+                                             rdfs:label "observed property"@en ;
+                                             <http://www.w3.org/2004/02/skos/core#definition> "Relation linking an Observation to the property that was observed. The ObservableProperty should be a property of the FeatureOfInterest (linked by hasFeatureOfInterest) of this Observation."@en .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#hasDesignHierarchy
+<urn:absolute:www.marine.ie/rdbes_v1#hasDesignHierarchy> rdf:type owl:ObjectProperty ;
+                                                         rdfs:domain <http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID> ;
+                                                         rdfs:range <urn:absolute:www.marine.ie/rdbes_v1#DesignHierarchy> ;
+                                                         rdfs:comment "Relation between Design ID and Design Hierarchy"@en ;
+                                                         rdfs:label "has Design Hierarchy" .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#hasSamplingSchemeType
+<urn:absolute:www.marine.ie/rdbes_v1#hasSamplingSchemeType> rdf:type owl:ObjectProperty ;
+                                                            rdfs:domain <http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID> ;
+                                                            rdfs:range <urn:absolute:www.marine.ie/rdbes_v1#SamplingSchemeType> ;
+                                                            rdfs:comment "Relation linking Design ID and Sampling scheme type"@en ;
+                                                            rdfs:label "has sampling scheme type"@en .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#amount
-<http://def.seegrid.csiro.au/ontology/om/om-lite#amount> rdf:type owl:DatatypeProperty ;
-                                                         rdfs:domain <http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure> ;
-                                                         rdfs:range xsd:double ;
-                                                         rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                         rdfs:label "numeric amount value" .
+###  http://www.marine.ie/rdbes_v1#hasArrivalDate
+:hasArrivalDate rdf:type owl:DatatypeProperty ;
+                rdfs:comment "has arrival date"@en ;
+                rdfs:label "has arrival date"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#count
-<http://def.seegrid.csiro.au/ontology/om/om-lite#count> rdf:type owl:DatatypeProperty ;
-                                                        rdfs:range xsd:integer ;
-                                                        rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                        rdfs:label "Count value" .
+###  http://www.marine.ie/rdbes_v1#hasSamplingDate
+:hasSamplingDate rdf:type owl:DatatypeProperty ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:comment "has sampling date"@en ;
+                 rdfs:label "has sampling date" .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#resultTime
-<http://def.seegrid.csiro.au/ontology/om/om-lite#resultTime> rdf:type owl:DatatypeProperty ,
-                                                                      owl:FunctionalProperty ;
-                                                             rdfs:domain [ rdf:type owl:Class ;
-                                                                           owl:unionOf ( <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation>
-                                                                                         <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection>
-                                                                                       )
-                                                                         ] ;
-                                                             rdfs:range xsd:dateTime ;
-                                                             rdfs:comment "time at which the result became available, after all processing steps were completed" ;
-                                                             rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                             rdfs:label "result time"@en ;
-                                                             <http://www.w3.org/2004/02/skos/core#definition> """The attribute resultTime:TM_Instant shall describe the time when the result became available, typically when the procedure (7.2.2.10) associated with the observation was completed. For some observations, this is identical to the phenomenonTime. However, there are important cases where they differ.
-
-EXAMPLE 1 Where a measurement is made on a specimen in a laboratory, the phenomenonTime is the time the specimen was retrieved from its host, while the resultTime is the time the laboratory procedure was applied.
-
-EXAMPLE 2 The resultTime also supports disambiguation of repeat measurements made of the same property of a feature using the same procedure.
-
-EXAMPLE 3 Where sensor observation results are post-processed, the resultTime is the post-processing time, while the phenomenonTime is the time of initial interaction with the world.
-
-EXAMPLE 4 Simulations can estimate the values for phenomena in the future or past. The phenomenonTime is the time that the result applies to, while the resultTime is the time that the simulation was executed.""" .
+###  http://www.marine.ie/rdbes_v1#hasStratification
+:hasStratification rdf:type owl:DatatypeProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :LandingEventID
+                                               :SampleID
+                                               :SpeciesSelectionID
+                                             )
+                               ] ;
+                   rdfs:comment "Indicator of presence (\"Y\") or absence (\"N\") of stratification of units of that sampling level"@en ;
+                   rdfs:label "has stratification" .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#truth
-<http://def.seegrid.csiro.au/ontology/om/om-lite#truth> rdf:type owl:DatatypeProperty ;
-                                                        rdfs:range xsd:boolean ;
-                                                        rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                        rdfs:label "Truth value" .
+###  http://www.marine.ie/rdbes_v1#isHierarchyCorrect
+:isHierarchyCorrect rdf:type owl:DatatypeProperty ;
+                    rdfs:range xsd:boolean .
+
+
+###  http://www.marine.ie/rdbes_v1#isMixedTrip
+:isMixedTrip rdf:type owl:DatatypeProperty ;
+             rdfs:domain :LandingEventID ;
+             rdfs:range xsd:boolean ;
+             rdfs:comment "Have these landings come from a mix of trips"@en ;
+             rdfs:label "is mixed trip"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#isSampled
+:isSampled rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:boolean ;
+           rdfs:comment "Sampled is the boolean that indicates if a unit was sampled or not" ;
+           rdfs:label "is sampled" .
+
+
+###  http://www.marine.ie/rdbes_v1#isUseForCalculateZero
+:isUseForCalculateZero rdf:type owl:DatatypeProperty ;
+                       rdfs:range xsd:boolean .
+
+
+###  http://www.marine.ie/rdbes_v1#test
+:test rdf:type owl:DatatypeProperty .
+
+
+###  http://www.w3.org/ns/sosa/hasSimpleResult
+<http://www.w3.org/ns/sosa/hasSimpleResult> rdf:type owl:DatatypeProperty ;
+                                            <http://schema.org/domainIncludes> <http://www.w3.org/ns/sosa/Actuation> ,
+                                                                               <http://www.w3.org/ns/sosa/Observation> ,
+                                                                               <http://www.w3.org/ns/sosa/Sampling> ;
+                                            rdfs:comment "The simple value of an Observation or Actuation or act of Sampling."@en ,
+                                                         "has sampling date" ;
+                                            rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+                                            rdfs:label "has simple result"@en ;
+                                            <http://www.w3.org/2004/02/skos/core#definition> "The simple value of an Observation or Actuation or act of Sampling."@en ;
+                                            <http://www.w3.org/2004/02/skos/core#example> "For instance, the values 23 or true."@en .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#CountObject
-<http://def.seegrid.csiro.au/ontology/om/om-lite#CountObject> rdf:type owl:Class ;
-                                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#count> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ;
-                                                              rdfs:comment "Object to wrap a count value" ;
-                                                              rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                              rdfs:label "Count object" .
+###  http://www.marine.ie/rdbes_v1#Area
+:Area rdf:type owl:Class ;
+      rdfs:comment "The area that this LandingEvent was caught in."@en ;
+      rdfs:label "Area"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#CountObservation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#CountObservation> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ,
-                                                                                   [ rdf:type owl:Restriction ;
-                                                                                     owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                     owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/om-lite#CountObject>
-                                                                                   ] ;
-                                                                   <http://purl.org/dc/terms/description> "Observation whose result is an integer" ;
-                                                                   rdfs:comment "Observation whose result is an integer" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                   rdfs:label "Count Observation"@en .
+###  http://www.marine.ie/rdbes_v1#ArrivalLocation
+:ArrivalLocation rdf:type owl:Class ;
+                 rdfs:comment "LOCODE of arrival location"@en ;
+                 rdfs:label "Arrival Location"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObject
-<http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObject> rdf:type owl:Class ;
-                                                                 rdfs:subClassOf owl:Thing ;
-                                                                 <http://purl.org/dc/terms/description> "Geometry object has properties relating to geometry, incuding positional and topological attributes, reference system, accuracy and precision. Might be geolocated. " ;
-                                                                 rdfs:comment "This stub is included in the om: ontology to support references to geometry as the result of a GeometryObservation.  An existing OWL class that represents the notion of a geometry may be asserted to be a sub-class of this stub, without requiring use of a specific representation of Geometry in the context of observations instance." ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                 rdfs:label "Geometry object" .
+###  http://www.marine.ie/rdbes_v1#BioVarFishID
+:BioVarFishID rdf:type owl:Class ;
+              rdfs:comment "National ID of the Individual fish / specimen. Unique across all species, years etc. This could be use as the link to other system e.g. SmartDots."@en ;
+              rdfs:label "National unique fish ID"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObservation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObservation> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ,
-                                                                                      [ rdf:type owl:Restriction ;
-                                                                                        owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                        owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/om-lite#GeometryObject>
-                                                                                      ] ;
-                                                                      <http://purl.org/dc/terms/description> "Observation whose result is a geometry object, such as a point, curve, surface or solid" ;
-                                                                      rdfs:comment "Observation whose result is a geometry object, such as a point, curve, surface or solid" ;
-                                                                      rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                      rdfs:label "Geometry Observation"@en .
+###  http://www.marine.ie/rdbes_v1#BioVarID
+:BioVarID rdf:type owl:Class ;
+          rdfs:comment "Automatic ID"@en ;
+          rdfs:label "Biological Variable ID"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject
-<http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject> rdf:type owl:Class ;
-                                                                <http://purl.org/dc/terms/description> "Scaled number" ;
-                                                                rdfs:comment """Scaled number
-
-This is an abstract class, which should be substituted by a suitable concrete representation of a measure or quantity at run-tme. 
-
-oml:SimpleMeasure 
-qudt:QuantityValue <http://qudt.org/schema/qudt#QuantityValue> 
-DUL:Region <http://www.loa-cnr.it/ontologies/DUL.owl#Region> 
-
-are candidates. """ ;
-                                                                rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                rdfs:label "Measure" .
+###  http://www.marine.ie/rdbes_v1#CatchCategory
+:CatchCategory rdf:type owl:Class ;
+               rdfs:comment """'Lan': Landings categorised as above minimum reference size
+'BMS': landings categorised as below minimum reference size
+'Catch': catch which is not determined if it is landing or discard so it include potentially both
+'Dis': discard released to the sea"""@en ;
+               rdfs:label "Catch category"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#Measurement
-<http://def.seegrid.csiro.au/ontology/om/om-lite#Measurement> rdf:type owl:Class ;
-                                                              rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject>
-                                                                              ] ;
-                                                              <http://purl.org/dc/terms/description> "Observation whose result is a scaled number" ;
-                                                              rdfs:comment "Observation whose result is a scaled number" ;
-                                                              rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                              rdfs:label "Measurement"@en ,
-                                                                         "Mesure"@fr .
+###  http://www.marine.ie/rdbes_v1#CatchFraction
+:CatchFraction rdf:type owl:Class ;
+               rdfs:comment "'Registers how the catch is sampled by observers."@en ;
+               rdfs:label "Catch fraction"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#Observation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> rdf:type owl:Class ;
-                                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#featureOfInterest> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#observedProperty> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#phenomenonTime> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#procedure> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#stimulusTime> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ,
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#resultTime> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ;
-                                                              owl:disjointWith <http://def.seegrid.csiro.au/ontology/om/om-lite#Process> ;
-                                                              <http://purl.org/dc/terms/description> """An observation is an act associated with a discrete time instant or period through which a number, term or other symbol is assigned to a phenomenon [2]. It involves application of a specified procedure, such as a sensor, instrument, algorithm or process chain. The procedure may be applied in-situ, remotely, or ex-situ with respect to the sampling location. The result of an observation is an estimate of the value of a property of some feature. Use of a common model allows observation data using different procedures to be combined unambiguously.
-
-The observation itself is also a feature, since it has properties and identity.
-
-Observation details are important for data discovery and for data quality estimation.
-
-The observation could be considered to carry metadata about an instance of a property (of the feature of interest). This property-value metadata complements the dataset and feature metadata that have been conventionally considered (e.g. ISO 19115). """ ;
-                                                              rdfs:comment """An observation is an act associated with a discrete time instant or period through which a number, term or other symbol is assigned to a phenomenon [2]. It involves application of a specified procedure, such as a sensor, instrument, algorithm or process chain. The procedure may be applied in-situ, remotely, or ex-situ with respect to the sampling location. The procedure may take inputs from the environment (as stimuli) or from the results of prior observations or processes. The result of an observation is an estimate of the value of a property of some feature. 
-
-Use of a common model allows observation data using different procedures to be combined unambiguously.
-
-The observation itself is also a feature, since it has properties and identity.
-
-Observation details are important for data discovery and for data quality estimation.
-
-The observation could be considered to carry metadata about an instance of a property (of the feature of interest). This property-value metadata complements the dataset and feature metadata that have been conventionally considered (e.g. ISO 19115).
-
-The values for the properties 'procedure', 'featureOfInterest', 'observedProperty', 'phenomenonTime', 'resultTime' may be inherited from a container resource.""" ;
-                                                              rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                              rdfs:label "Observation"@en ;
-                                                              <http://www.w3.org/2004/02/skos/core#altLabel> "Generic observation" ;
-                                                              <http://www.w3.org/2004/02/skos/core#changeNote> "A new property oml:samplingStrategy is scoped to this class. In this  formulation, the (mandatory) feature-of-interest always refers to the ultimate feature of interest, whose type can carry the observed property, and the (optional) sampling strategy allows the sampling feature to be made explicit as an additional relationship. This overcomes some semantic sleight-of-hand in ISO 19156, in which the constraint the the observed property was commensurate with the feature-of-interest was allowed to be 'transitive' via the sampledFeature property." ;
-                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "Observation"@en ,
-                                                                                                              "Observation"@fr .
+###  http://www.marine.ie/rdbes_v1#CatchRegistration
+:CatchRegistration rdf:type owl:Class ;
+                   rdfs:comment "Registers what components of catch are expected in the species selection table options: All – either Catch or Lan+Dis rows expected next table);  Lan – only landings expected in next table; Dis – only discard expected in next table; None – no next table."@en ;
+                   rdfs:label "Catch registration"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection
-<http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection> rdf:type owl:Class ;
-                                                                        rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                          owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#member> ;
-                                                                                          owl:minCardinality "1"^^xsd:nonNegativeInteger
-                                                                                        ] ;
-                                                                        <http://purl.org/dc/terms/description> """A collection of observations  or collections. 
-
-The collection may be homogeneous any of the feature-of-interest, observed-property, procedure, phenomenon-time or result-time. If only one value for any of these properties is provided on the collection, then it may be inferred to be a common (default) value for all the member observations or collections, unless locally overridden.""" ;
-                                                                        rdfs:comment """A collection of observations  or collections. 
-
-The collection may be homogeneous in any of the feature-of-interest, observed-property, procedure, phenomenon-time or result-time. If only one value for any of these properties is provided on the collection, then it may be inferred to be a common (default) value for all the member observations or collections, unless locally overridden.""" ;
-                                                                        rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                        rdfs:label "Collection of observations"@en .
+###  http://www.marine.ie/rdbes_v1#CertaintyQualitative
+:CertaintyQualitative rdf:type owl:Class ;
+                      rdfs:comment "Qualitative measures of certainty e.g. WGBIOP's quality scale for age readability. Use 'Unknown' if not recorded and 'NotApplicable' if this is not reported for this measuremnet e.g. length"@en ;
+                      rdfs:label "Certainty qualitative"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationContext
-<http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationContext> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                       owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#relatedObservation> ;
-                                                                                       owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                                     ] ;
-                                                                     <http://purl.org/dc/terms/description> "Context linking two or more observations" ;
-                                                                     rdfs:comment """Some observations depend on other observations to provide context which is important, sometimes essential, in understanding the result. These dependencies are stronger than mere spatio-temporal coincidences, requiring explicit representation. If present, the association class class ObservationContext (Figure 2) shall link a OM_Observation to another OM_Observation, with the role name relatedObservation for the target. It shall support one attribute.
-
-EXAMPLES	Some examples include the conditions associated with experimental replicates (e.g., experimental plots and treatments used), biotic factors (e.g., ecological community), interactions among features (e.g., predator-prey), or other temporary relationships occurring at the time of observation that are are not inherent to the observed features themselves (i.e., they change over time), or the related observation may provide input to a process that generates a new result.
-This association complements the Intention association which describes relationships between a sampling feature and domain features.""" ;
-                                                                     rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                     rdfs:label "Observation context"@en .
+###  http://www.marine.ie/rdbes_v1#ClassMeasured
+:ClassMeasured rdf:type owl:Class ;
+               rdfs:comment "The measured class in mm. or grammes, typically length (Lower bound of size class, e.g. 650 for 65-66 cm)" ;
+               rdfs:label "Length or weight class measured" .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#Process
-<http://def.seegrid.csiro.au/ontology/om/om-lite#Process> rdf:type owl:Class ;
-                                                          <http://purl.org/dc/terms/description> "Agent, device, sensor, software, protocol, computational method, algorithm or plan responsible for generating an observation result. Input may be a sensor stimulus, or the output from a previous process. An oml:Process might be involved in many observations. " ;
-                                                          rdfs:comment """Agent, device, sensor, software, protocol, computational method, algorithm or plan responsible for generating an observation result. Input may be a sensor stimulus, or the output from a previous process. An oml:Process is re-usable, and might be involved in many observations.
-
-This terminology is consistent with SensorML, which defines Process as the super-class of all sensors and sensor systems. But this usage is different to the use of the term \"Process\" in BCO and OBOE, where it denotes an observation occurrence. """ ;
-                                                          rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                          rdfs:label "Observation process"@en ;
-                                                          <http://www.w3.org/2004/02/skos/core#historyNote> """Original description from ISO 19156 says: 
-
-The class OM_Process (Figure 2) is an instance of the «metaclass» GF_FeatureType (ISO 19109:2005), which therefore represents a feature type. OM_Process is abstract, and has no attributes, operations or associations. It serves as the base class for observation processes. The purpose of an observation process is to generate an observation result. An instance of OM_Process is often an instrument or sensor, but may be a human observer, a simulator, or a process or algorithm applied to more primitive results used as inputs. 
-
-NOTE	ISO 19115-2:2008 provides MI_Instrument, LE_Processing and LE_Algorithm, which could all be modelled as specializations of OM_Process. OGC SensorML [10] provides a model which is suitable for many observation procedures.""" ,
-                                                                                                            """Original description from OGC SensorML says:
-
-In SensorML, all components are modeled as processes. This includes components normally viewed as hardware, including transducers, actuators, and processors (which are viewed as process components) and sensors and platforms (which are modeled as systems). All components are modeled as processes that take input, and which through the application of an algorithm defined by a method and parameter values, generate output. All such components can therefore participate in process chains. Process chains are themselves processes with inputs, outputs, and parameters.
-
-Hence, SensorML can be viewed as a specialized process description language with an emphasis on application to sensor data. Process descriptions in SensorML are agnostic of the development environment in which they might be executed, or the protocol by which data is transported between process execution modules. SensorML does not try to replace other existing technologies (such as BPEL or MATLAB Simulink). It is also conceived that SensorML-defined processes could be imported and executed within other execution environments, such as BPEL or MATLAB Simulink, as well as within SenosrML-enabled process execution software.""" .
+###  http://www.marine.ie/rdbes_v1#ClusterName
+:ClusterName rdf:type owl:Class ;
+             rdfs:comment "Name or code of the cluster selected for sampling"@en ;
+             rdfs:label "Cluster name"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure
-<http://def.seegrid.csiro.au/ontology/om/om-lite#SimpleMeasure> rdf:type owl:Class ;
-                                                                owl:equivalentClass [ rdf:type owl:Restriction ;
-                                                                                      owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#amount> ;
-                                                                                      owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                                    ] ;
-                                                                rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#MeasureObject> ,
-                                                                                [ rdf:type owl:Restriction ;
-                                                                                  owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#uom> ;
-                                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                                ] ;
-                                                                <http://purl.org/dc/terms/description> "Simple implementation of a scaled number as an (amount, unit) pair" ;
-                                                                rdfs:comment "Simple implementation of a scaled number as an (amount, unit) pair" ;
-                                                                rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                rdfs:label "Simple measure (quantity)" .
+###  http://www.marine.ie/rdbes_v1#Clustering
+:Clustering rdf:type owl:Class ;
+            rdfs:comment "Indicator existence and type of cluster sampling of units in that level of the sampling hierarchy"@en ;
+            rdfs:label "Clustering"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject
-<http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject> rdf:type owl:Class ;
-                                                                 <http://purl.org/dc/terms/description> "Temporal object has properties relating to time only. " ;
-                                                                 rdfs:comment """Temporal geometry or topology, collection or complex. 
-
-Temporal object has properties relating to time only.""" ;
-                                                                 rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                 rdfs:label "Temporal object" .
+###  http://www.marine.ie/rdbes_v1#ConversionFactorAssessment
+:ConversionFactorAssessment rdf:type owl:Class ;
+                            rdfs:comment "The conversion factor needed for the conversion from the measured type to the assessment type. If no conversion then this is equal to 1." ;
+                            rdfs:label "Conversion factor assessment" .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObservation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObservation> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ,
-                                                                                      [ rdf:type owl:Restriction ;
-                                                                                        owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                        owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/om-lite#TemporalObject>
-                                                                                      ] ;
-                                                                      <http://purl.org/dc/terms/description> "Observation whose result is a temporal object, such as a time instant or period" ;
-                                                                      rdfs:comment "Observation whose result is a temporal object, such as a time instant or period" ;
-                                                                      rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                      rdfs:label "Temporal Observation"@en .
+###  http://www.marine.ie/rdbes_v1#EncryptedVesselCode
+:EncryptedVesselCode rdf:type owl:Class ;
+                     rdfs:comment "Encrypted vessel identifier max. 100 characters, encrypted by the national institute before it is upload. Id encrypted so that no-one can map the Id to the real vessel. This code should be used by the Encrypted Vessel Identifier field in the Vessel Selection. If the characteristics of the vessel change range group e.g. length group, then a new encrypted vessel code have to be inserted. If regional sampling schemes are use, then the vessels have to be coordinated across countries, so one vessel only appears as one record/vessel in this Vessel Details table."@en ;
+                     rdfs:label "Encrypted vessel code"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObject
-<http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObject> rdf:type owl:Class ;
-                                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#truth> ;
-                                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                              ] ;
-                                                              rdfs:comment "Object to wrap a truth value" ;
-                                                              rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                              rdfs:label "Truth object" .
+###  http://www.marine.ie/rdbes_v1#EncryptedVesselID
+:EncryptedVesselID rdf:type owl:Class ;
+                   rdfs:comment "Encrypted by the national institute before it is upload. This code it refering to the Encrypted Vessel Identifier field in the Vessel Details."@en ;
+                   rdfs:label "Encrypted vessel ID"@en .
 
 
-###  http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObservation
-<http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObservation> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ,
-                                                                                   [ rdf:type owl:Restriction ;
-                                                                                     owl:onProperty <http://def.seegrid.csiro.au/ontology/om/om-lite#result> ;
-                                                                                     owl:allValuesFrom <http://def.seegrid.csiro.au/ontology/om/om-lite#TruthObject>
-                                                                                   ] ;
-                                                                   <http://purl.org/dc/terms/description> "Observation whose result is either true or false" ;
-                                                                   rdfs:comment "Observation whose result is either true or false" ;
-                                                                   rdfs:isDefinedBy <http://def.seegrid.csiro.au/ontology/om/om-lite> ;
-                                                                   rdfs:label "Truth Observation"@en .
+###  http://www.marine.ie/rdbes_v1#FrequencyMeasureID
+:FrequencyMeasureID rdf:type owl:Class ;
+                    rdfs:comment "Automatic ID" ;
+                    rdfs:label "Frequency measure ID" .
 
 
-###  http://marine.ie/stock#AphiaID
-:AphiaID rdf:type owl:Class ;
-         rdfs:comment "This object lists the aphia ID of a sample" ;
-         rdfs:label "AphiaID" .
+###  http://www.marine.ie/rdbes_v1#GSASubarea
+:GSASubarea rdf:type owl:Class ;
+            rdfs:comment "GSA subarea, mandatory for FAO area 37 (Mediterranean and Black Sea). (Use 'NotApplicable' if not fishing in the area)"@en ;
+            rdfs:label "GSA subarea"@en .
 
 
-###  http://marine.ie/stock#CruiseCode
-:CruiseCode rdf:type owl:Class ;
-            rdfs:comment "This object lists the cruise code of a ship" ;
-            rdfs:label "CruiseCode" .
+###  http://www.marine.ie/rdbes_v1#GearType
+:GearType rdf:type owl:Class ;
+          rdfs:comment "The FAO gear code."@en ;
+          rdfs:label "Gear type"@en .
 
 
-###  http://marine.ie/stock#GearCode
-:GearCode rdf:type owl:Class ;
-          rdfs:comment "This object lists the code of the gear used to catch the sample header" ;
-          rdfs:label "GearCode" .
+###  http://www.marine.ie/rdbes_v1#LandingCountry
+:LandingCountry rdf:type owl:Class ;
+                rdfs:comment "The country that this LandingEvent location is in."@en ;
+                rdfs:label "Landing country"@en .
 
 
-###  http://marine.ie/stock#Port
-:Port rdf:type owl:Class ;
-      rdfs:comment "This object lists the name of the port" ;
-      rdfs:label "Port" .
+###  http://www.marine.ie/rdbes_v1#LandingEventID
+:LandingEventID rdf:type owl:Class ;
+                rdfs:comment "Automatic ID"@en ;
+                rdfs:label "Landing event ID"@en .
 
 
-###  http://marine.ie/stock#Presentation
+###  http://www.marine.ie/rdbes_v1#MeasurementTypeForAssessment
+:MeasurementTypeForAssessment rdf:type owl:Class ;
+                              rdfs:comment "The measurement type of the class needed for assessment e.g. total length, live weight, carapace length." ;
+                              rdfs:label "Measurement type for assessment" .
+
+
+###  http://www.marine.ie/rdbes_v1#Metier6
+:Metier6 rdf:type owl:Class ;
+         rdfs:comment "Level 6 metier"@en ;
+         rdfs:label "Metier 6 fishing activity"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#MitigationDevice
+:MitigationDevice rdf:type owl:Class ;
+                  rdfs:comment "Codes for dominant other mitigation devices: AttAcoustic, AttAltProf, AttExclDev, AttLight, unknown, None, etc."@en ;
+                  rdfs:label "Bycatch mitigation device"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#ObservationActivityType
+:ObservationActivityType rdf:type owl:Class ;
+                         rdfs:comment "Registers the part of the fishing operation that was sampled. Conceptually, fishing operations are considered divided into a SLIPPING stage (Slip), DROP-OUT stage (Drop), a PRESORTING stage (Presort) and a SORTING stage (Sort), etc. Use \"Sort\" if samples come from landing events or trips sampled onshore."@en ;
+                         rdfs:label "Observation activity type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#ObservationType
+:ObservationType rdf:type owl:Class ;
+                 rdfs:comment "'Registers the type of sampling performed. Codes: Visual (when observers screen the catch visually), Volume (when observers sample a volume, e.g., a box or basket) and Imagery (camera recordings). (before called: SamplingType)"@en ;
+                 rdfs:label "Observation type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#OnshoreEventID
+:OnshoreEventID rdf:type owl:Class ;
+                rdfs:comment "Automatic ID"@en ;
+                rdfs:label "Onshore event ID"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#Presentation
 :Presentation rdf:type owl:Class ;
-              rdfs:comment "This object lists the type of sample presentation" ;
+              rdfs:comment "Presentation; the condition in which the sample was presented, e.g. gutted, whole, headless, tail, wing. The presentation will in most cases follow the presentation in the SA table." ;
               rdfs:label "Presentation" .
 
 
-###  http://marine.ie/stock#Sample
-:Sample rdf:type owl:Class ;
-        rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#ObservationCollection> ;
-        rdfs:comment "This object lists a sample number. A sample is composed of a number of specimens" ;
-        rdfs:label "Sample" .
+###  http://www.marine.ie/rdbes_v1#RecordType
+:RecordType rdf:type owl:Class ;
+            rdfs:comment "Type of record being recorded eg DE - Design, SD - Sampling Details" ;
+            rdfs:label "Record type" .
 
 
-###  http://marine.ie/stock#SampleHeader
-:SampleHeader rdf:type owl:Class ;
-              rdfs:comment "This object lists a sample header number. A sample header is composed of a number of samples" ;
-              rdfs:label "SampleHeader" .
+###  http://www.marine.ie/rdbes_v1#SampleID
+:SampleID rdf:type owl:Class ;
+          rdfs:comment "Automatic ID"@en ;
+          rdfs:label "Sample ID"@en .
 
 
-###  http://marine.ie/stock#SamplerID
-:SamplerID rdf:type owl:Class ;
-           rdfs:comment "This object lists the ID of the person doing the sampling" ;
-           rdfs:label "SamplerID" .
+###  http://www.marine.ie/rdbes_v1#SampleLocode
+:SampleLocode rdf:type owl:Class ;
+              rdfs:comment "LOCODE of sampling location"@en ;
+              rdfs:label "Sampling locode"@en .
 
 
-###  http://marine.ie/stock#SizeCategory
-:SizeCategory rdf:type owl:Class ;
-              rdfs:comment "This object lists the size category of the sample" ;
-              rdfs:label "SizeCategory" .
+###  http://www.marine.ie/rdbes_v1#Sampler
+:Sampler rdf:type owl:Class ;
+         rdfs:comment "Self-sampling, Observer, Control, Electronic Monitoring (EM"@en ;
+         rdfs:label "Sampler"@en .
 
 
-###  http://marine.ie/stock#Specimen
-:Specimen rdf:type owl:Class ;
-          rdfs:subClassOf <http://def.seegrid.csiro.au/ontology/om/om-lite#Observation> ;
-          rdfs:comment "This is a single specimen" ;
-          rdfs:label "Specimen" .
+###  http://www.marine.ie/rdbes_v1#SamplingCountry
+:SamplingCountry rdf:type owl:Class ;
+                 owl:disjointWith :SamplingInstitute ;
+                 rdfs:comment "The country that did the sampling"@en ;
+                 rdfs:label "Sampling Country"@en .
 
 
-###  http://marine.ie/stock#SubDivision
-:SubDivision rdf:type owl:Class ;
-             rdfs:comment "This object lists and ICES sub division that a sample header was caught in" ;
-             rdfs:label "SubDivision" .
+###  http://www.marine.ie/rdbes_v1#SamplingDetailID
+:SamplingDetailID rdf:type owl:Class ;
+                  rdfs:comment "Automatic ID"@en ;
+                  rdfs:label "Sampling detail ID"@en .
 
 
-###  http://marine.ie/stock#Trip
-:Trip rdf:type owl:Class ;
-      rdfs:comment "This object is a trip ID" ;
-      rdfs:label "Trip" .
+###  http://www.marine.ie/rdbes_v1#SamplingInstitute
+:SamplingInstitute rdf:type owl:Class ;
+                   rdfs:comment "The sampling institution, i.e. those who actually did the sampling"@en ;
+                   rdfs:label "Sampling institute"@en .
 
 
-###  http://marine.ie/stock#VesselID
-:VesselID rdf:type owl:Class ;
-          rdfs:comment "This object lists a vessel ID that corresponds to a sample header" ;
-          rdfs:label "VesselID" .
+###  http://www.marine.ie/rdbes_v1#SamplingLocation
+:SamplingLocation rdf:type owl:Class ;
+                  rdfs:comment "National Name of location"@en ;
+                  rdfs:label "Sampling location"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SamplingType
+:SamplingType rdf:type owl:Class ;
+              rdfs:comment "Indicating if the sampling is do 'At-Sea' or 'On-Shore'"@en ;
+              rdfs:label "Sampling type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SelectionMethod
+:SelectionMethod rdf:type owl:Class ;
+                 rdfs:comment "The method of selecction unit"@en ;
+                 rdfs:label "Selection Method"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SequenceNumber
+:SequenceNumber rdf:type owl:Class ;
+                rdfs:comment "Sequential numbering. The sequence number identify the selections made. Preperably representing the order of the selections."@en ;
+                rdfs:label "Sequence number"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#Sex
+:Sex rdf:type owl:Class ;
+     rdfs:comment "Sex"@en ;
+     rdfs:label "Sex"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SpeciesCode
+:SpeciesCode rdf:type owl:Class ;
+             rdfs:comment "The Aphiaid code of the species given by www.marinespecies.org (127160 for Solea solea). In the case of mixed species this may be the commercial taxon."@en ;
+             rdfs:label "Species code"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SpeciesListName
+:SpeciesListName rdf:type owl:Class ;
+                 rdfs:comment "'National name of the species list"@en ;
+                 rdfs:label "Species list name"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SpeciesSelectionID
+:SpeciesSelectionID rdf:type owl:Class ;
+                    rdfs:comment "Automatic ID"@en ;
+                    rdfs:label "Species selection ID"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#SpecimenState
+:SpecimenState rdf:type owl:Class ;
+               rdfs:comment "'State of the specimens (e.g., dead, damaged, etc)."@en ;
+               rdfs:label "Specimen state"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#StateOfProcessing
+:StateOfProcessing rdf:type owl:Class ;
+                   rdfs:comment "State of processing e.g. boiled, frozen and defrosted. The state will often be the same as the state in the SA table, but in some cases it may change e.g. fish are sampled fresh at-sea in the SA, then they are frozen and the FM/BV variables are measured later in the lab on defrosted fish. If the state is not known, then use 'Unknown'" ;
+                   rdfs:label "State of Processing" .
+
+
+###  http://www.marine.ie/rdbes_v1#StratumName
+:StratumName rdf:type owl:Class ;
+             rdfs:comment "The stratum of this record, 'U' if unstratified"@en ;
+             rdfs:label "Stratum Name"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#TypeMeasured
+:TypeMeasured rdf:type owl:Class ;
+              rdfs:subClassOf <http://www.w3.org/ns/sosa/Observation> ;
+              rdfs:comment "The measured measurement type of the e.g. total length, measured weight, carapace length." ;
+              rdfs:label "Measurement type" .
+
+
+###  http://www.marine.ie/rdbes_v1#UnitName
+:UnitName rdf:type owl:Class ;
+          rdfs:comment "The unique name of this unit"@en ;
+          rdfs:label "Unit Name"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#UnitType
+:UnitType rdf:type owl:Class ;
+          rdfs:comment "The type of sampling unit. This would define the sampling unit and could be for example a box of fish, number (of fish), a section of net, a basket of mixed discards or individual units (e.g., individual fish randomly sampled throughout the catch)."@en ;
+          rdfs:label "Unit type"@en .
+
+
+###  http://www.marine.ie/rdbes_v1#ValueUnitOrScale
+:ValueUnitOrScale rdf:type owl:Class ;
+                  rdfs:comment "The unit or scale of the measured value in the biovarValue, e.g. Year/mm/g/maturity scale/winter rings."@en ;
+                  rdfs:label "Value unit or scale"@en .
+
+
+###  http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID
+<http://www.semanticweb.org/akennedy/ontologies/2022/3/untitled-ontology-61#DesignID> rdf:type owl:Class ;
+                                                                                      rdfs:comment "Automatic ID"@en ;
+                                                                                      rdfs:label "Design ID"@en .
+
+
+###  http://www.w3.org/ns/sosa/Observation
+<http://www.w3.org/ns/sosa/Observation> rdf:type owl:Class ;
+                                        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/sosa/FeatureOfInterest>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/hasResult> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/sosa/Result>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/madeBySensor> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/sosa/Sensor>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/observedProperty> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/sosa/ObservableProperty>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/usedProcedure> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/sosa/Procedure>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/ssn/wasOriginatedBy> ;
+                                                          owl:allValuesFrom <http://www.w3.org/ns/ssn/Stimulus>
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/hasResult> ;
+                                                          owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/madeBySensor> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/observedProperty> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/phenomenonTime> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/ssn/wasOriginatedBy> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.w3.org/ns/sosa/resultTime> ;
+                                                          owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                        ] ;
+                                        rdfs:comment "Act of carrying out an (Observation) Procedure to estimate or calculate a value of a property of a FeatureOfInterest. Links to a Sensor to describe what made the Observation and how; links to an ObservableProperty to describe what the result is an estimate of, and to a FeatureOfInterest to detail what that property was associated with."@en ;
+                                        rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+                                        rdfs:label "Observation"@en ;
+                                        <http://www.w3.org/2004/02/skos/core#definition> "Act of carrying out an (Observation) Procedure to estimate or calculate a value of a property of a FeatureOfInterest. Links to a Sensor to describe what made the Observation and how; links to an ObservableProperty to describe what the result is an estimate of, and to a FeatureOfInterest to detail what that property was associated with."@en ;
+                                        <http://www.w3.org/2004/02/skos/core#example> "The activity of estimating the intensity of an Earthquake using the Mercalli intensity scale is an Observation as is measuring the moment magnitude, i.e., the energy released by said earthquake."@en .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#DesignHierarchy
+<urn:absolute:www.marine.ie/rdbes_v1#DesignHierarchy> rdf:type owl:Class ;
+                                                      rdfs:comment "A code refering to the upper hierarchy that the data was collected using"@en ;
+                                                      rdfs:label "Design hierarchy"@en .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#SamplingScheme
+<urn:absolute:www.marine.ie/rdbes_v1#SamplingScheme> rdf:type owl:Class ;
+                                                     rdfs:comment "The name for the sampling scheme under which the data were collected"@en ;
+                                                     rdfs:label "Sampling scheme"@en .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#SamplingSchemeType
+<urn:absolute:www.marine.ie/rdbes_v1#SamplingSchemeType> rdf:type owl:Class ;
+                                                         rdfs:comment """Sampling scheme type code list: 
+'Regional Routine', 'Regional Pilot', 'National Routine', 'National Pilot'."""@en ;
+                                                         rdfs:label "Sampling scheme type"@en .
+
+
+###  urn:absolute:www.marine.ie/rdbes_v1#Year
+<urn:absolute:www.marine.ie/rdbes_v1#Year> rdf:type owl:Class ;
+                                           rdfs:comment "Year of sampling"@en ;
+                                           rdfs:label "Year"@en .
 
 
 #################################################################
 #    Annotations
 #################################################################
 
-<http://purl.org/dc/elements/1.1/> <http://purl.org/dc/terms/publisher> <http://purl.org/dc/aboutdcmi#DCMI> ;
-                                   <http://purl.org/dc/terms/title> "Dublin Core Metadata Element Set, Version 1.1"@en ;
-                                   <http://purl.org/dc/terms/modified> "2012-06-14"^^xsd:date .
+:isHierarchyCorrect rdfs:label "is hierarch correct"@en ;
+                    rdfs:comment "Yes or No. \"Yes\", if you clearly idetified the hierarchy and estimates can be made following the design. \"No\", if the hierarchy was difficult to determine." .
 
 
-<http://purl.org/dc/elements/1.1/contributor> <http://purl.org/dc/terms/description> "The guidelines for using names of persons or organizations as creators also apply to contributors.  Typically, the name of a Contributor should be used to indicate the entity."@en ;
-                                              rdfs:label "Contributor"@en ;
-                                              rdfs:comment "An entity responsible for making contributions to the resource."@en ;
-                                              <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                              <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/contributor) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                              rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
+:isUseForCalculateZero rdfs:label "Use for calculate zero"@en ;
+                       rdfs:comment "Indicates if the data can be used for calculating zeros"@en .
 
 
-<http://purl.org/dc/elements/1.1/coverage> <http://purl.org/dc/terms/description> "Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names [[TGN](https://www.getty.edu/research/tools/vocabulary/tgn/index.html)]. Where appropriate, named places or time periods may be used in preference to numeric identifiers such as sets of coordinates or date ranges."@en ;
-                                           <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/coverage) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                           rdfs:comment "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant."@en ;
-                                           <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                           rdfs:label "Coverage"@en .
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :CatchFraction
+                :ObservationActivityType
+                :ObservationType
+              )
+] .
 
 
-<http://purl.org/dc/elements/1.1/date> <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                       rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                       <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/date) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                       rdfs:comment "A point or period of time associated with an event in the lifecycle of the resource."@en ;
-                                       <http://purl.org/dc/terms/description> "Date may be used to express temporal information at any level of granularity.  Recommended practice is to express the date, date/time, or period of time according to ISO 8601-1 [[ISO 8601-1](https://www.iso.org/iso-8601-date-and-time-format.html)] or a published profile of the ISO standard, such as the W3C Note on Date and Time Formats [[W3CDTF](https://www.w3.org/TR/NOTE-datetime)] or the Extended Date/Time Format Specification [[EDTF](http://www.loc.gov/standards/datetime/)].  If the full date is unknown, month and year (YYYY-MM) or just year (YYYY) may be used. Date ranges may be specified using ISO 8601 period of time specification in which start and end dates are separated by a '/' (slash) character.  Either the start or end date may be missing."@en ;
-                                       rdfs:label "Date"@en .
-
-
-<http://purl.org/dc/elements/1.1/format> <http://purl.org/dc/terms/description> "Recommended practice is to use a controlled vocabulary where available. For example, for file formats one could use the list of Internet Media Types [[MIME](https://www.iana.org/assignments/media-types/media-types.xhtml)]."@en ;
-                                         <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                         <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/format) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                         rdfs:label "Format"@en ;
-                                         rdfs:comment "The file format, physical medium, or dimensions of the resource."@en ;
-                                         rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
-
-
-<http://purl.org/dc/elements/1.1/language> <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                           <http://purl.org/dc/terms/description> "Recommended practice is to use either a non-literal value representing a language from a controlled vocabulary such as ISO 639-2 or ISO 639-3, or a literal value consisting of an IETF Best Current Practice 47 [[IETF-BCP47](https://tools.ietf.org/html/bcp47)] language tag."@en ;
-                                           rdfs:label "Language"@en ;
-                                           <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/language) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                           rdfs:comment "A language of the resource."@en .
-
-
-<http://purl.org/dc/elements/1.1/publisher> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                            <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                            rdfs:label "Publisher"@en ;
-                                            <http://purl.org/dc/terms/description> "Examples of a Publisher include a person, an organization, or a service. Typically, the name of a Publisher should be used to indicate the entity."@en ;
-                                            rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                            rdfs:comment "An entity responsible for making the resource available."@en .
-
-
-<http://purl.org/dc/elements/1.1/relation> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/relation) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                           rdfs:label "Relation"@en ;
-                                           <http://purl.org/dc/terms/description> "Recommended practice is to identify the related resource by means of a URI. If this is not possible or feasible, a string conforming to a formal identification system may be provided."@en ;
-                                           <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                           rdfs:comment "A related resource."@en ;
-                                           rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
-
-
-<http://purl.org/dc/elements/1.1/subject> <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/subject) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                          <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date ;
-                                          <http://purl.org/dc/terms/description> "Typically, the subject will be represented using keywords, key phrases, or classification codes.  Recommended best practice is to use a controlled vocabulary."@en ;
-                                          rdfs:label "Subject"@en ;
-                                          rdfs:comment "The topic of the resource."@en ;
-                                          rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> .
-
-
-<http://purl.org/dc/elements/1.1/type> rdfs:comment "The nature or genre of the resource."@en ;
-                                       <http://www.w3.org/2004/02/skos/core#note> "A [second property](/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/type) with the same name as this property has been declared in the [dcterms: namespace](http://purl.org/dc/terms/).  See the Introduction to the document [DCMI Metadata Terms](/specifications/dublin-core/dcmi-terms/) for an explanation."@en ;
-                                       rdfs:isDefinedBy <http://purl.org/dc/elements/1.1/> ;
-                                       rdfs:label "Type"@en ;
-                                       <http://purl.org/dc/terms/description> "Recommended practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [[DCMI-TYPE](http://dublincore.org/documents/dcmi-type-vocabulary/)]. To describe the file format, physical medium, or dimensions of the resource, use the Format element."@en ;
-                                       <http://purl.org/dc/terms/issued> "1999-07-02"^^xsd:date .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ClusterName
+                :Clustering
+                :SelectionMethod
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
