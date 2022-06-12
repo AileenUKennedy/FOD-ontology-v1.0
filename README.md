@@ -7,4 +7,4 @@ The FOD ontology is developed by Aileen Kennedy, a PhD Student at Nataional Univ
 # FOD Ontology
 The ontology was written in OWL in Protégé and saved in Turtle format.
 
-The documents folder contains html documentation pages
+The document and data folder contains synthetic test data, sample SPQARL queries and html documentation pages
