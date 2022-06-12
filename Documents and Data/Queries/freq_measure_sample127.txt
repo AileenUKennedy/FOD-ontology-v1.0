@@ -1,0 +1,23 @@
+#what is the frequency measure for sample ID 127
+PREFIX sosa: <http://www.w3.org/ns/sosa#>
+PREFIX marine: <http://marine.ie/ontologies/fishsamples#>
+PREFIX fish: <http://marine.ie/datasets/fishsamples/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+prefix owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX ices_year: <https://vocab.ices.dk/services/rdf/collection/Year/>
+PREFIX ices_species: <https://vocab.ices.dk/services/rdf/collection/SpecWoRMS/>
+PREFIX ices_area: <https://vocab.ices.dk/services/rdf/collection/ICES_area/>
+
+select DISTINCT ?sample ?freqMeas ?obsProp ?class ?result
+
+WHERE{
+  
+  	fish:SampleID127 marine:hasFrequencyMeasure ?freqMeas.
+	?freqMeas  sosa:observedProperty ?obsProp.
+  	?freqMeas sosa:hasSimpleResult ?result.
+  	?freqMeas marine:hasClassMeasured ?class
+               
+      
+  }
